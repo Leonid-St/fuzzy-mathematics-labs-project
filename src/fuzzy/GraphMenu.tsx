@@ -10,6 +10,8 @@ import Box from "@mui/material/Box";
 import { IPointStorage } from "../App";
 import { RenderLineChart } from "../RenderLineChart";
 import React from "react";
+import { Checkbox, ListItemIcon } from "@mui/material";
+import Check from "@mui/icons-material/Check";
 
 export const SelectGraph: React.FC = () => {
   return <></>;
@@ -73,21 +75,36 @@ export const GraphMenu: React.FC<IGraphMenu> = ({
           }}
           disableRipple
         >
-          <Box borderColor={selectedGraph ? "greenyellow" : undefined}>
-            <Stack spacing={2} direction={"column"}>
-              <Grid item sm={1}>{` - ${GraphName.S}`}</Grid>
-              <Grid item sm={11}>
-                <RenderLineChart
-                  width={300}
-                  height={100}
-                  data={PointStorage.pointsGraphS}
-                />
-              </Grid>
-            </Stack>
-          </Box>
+          {selectedGraph === GraphName.S ? (
+            <ListItemIcon>
+              <Check />
+            </ListItemIcon>
+          ) : null}
+
+          <Stack spacing={2} direction={"column"}>
+            <Grid item sm={1}>{` - ${GraphName.S}`}</Grid>
+            <Grid item sm={11}>
+              <RenderLineChart
+                width={300}
+                height={100}
+                data={PointStorage.pointsGraphS}
+              />
+            </Grid>
+          </Stack>
         </MenuItem>
         {/** Graph.Mountain */}
-        <MenuItem onClick={handleClose} disableRipple>
+        <MenuItem
+          onClick={(e) => {
+            setSelectedGraph(GraphName.Mountain);
+            handleClose();
+          }}
+          disableRipple
+        >
+          {selectedGraph === GraphName.Mountain ? (
+            <ListItemIcon>
+              <Check />
+            </ListItemIcon>
+          ) : null}
           <Stack spacing={2} direction={"column"}>
             <Grid item sm={1}>{` - ${GraphName.Mountain}`}</Grid>
             <Grid item sm={11}>
@@ -100,7 +117,18 @@ export const GraphMenu: React.FC<IGraphMenu> = ({
           </Stack>
         </MenuItem>
         {/** Graph.Triangle */}
-        <MenuItem onClick={handleClose} disableRipple>
+        <MenuItem
+          onClick={(e) => {
+            setSelectedGraph(GraphName.Triangle);
+            handleClose();
+          }}
+          disableRipple
+        >
+          {selectedGraph === GraphName.Triangle ? (
+            <ListItemIcon>
+              <Check />
+            </ListItemIcon>
+          ) : null}
           <Stack spacing={2} direction={"column"}>
             <Grid item sm={1}>{` - ${GraphName.Triangle}`}</Grid>
             <Grid item sm={11}>
@@ -113,7 +141,18 @@ export const GraphMenu: React.FC<IGraphMenu> = ({
           </Stack>
         </MenuItem>
         {/** Graph.BackS */}
-        <MenuItem onClick={handleClose} disableRipple>
+        <MenuItem
+          onClick={(e) => {
+            setSelectedGraph(GraphName.BackS);
+            handleClose();
+          }}
+          disableRipple
+        >
+          {selectedGraph === GraphName.BackS ? (
+            <ListItemIcon>
+              <Check />
+            </ListItemIcon>
+          ) : null}
           <Stack spacing={2} direction={"column"}>
             <Grid item sm={1}>{` - ${GraphName.BackS}`}</Grid>
             <Grid item sm={11}>
@@ -126,7 +165,18 @@ export const GraphMenu: React.FC<IGraphMenu> = ({
           </Stack>
         </MenuItem>
         {/** Graph.Trapeze*/}
-        <MenuItem onClick={handleClose} disableRipple>
+        <MenuItem
+          onClick={(e) => {
+            setSelectedGraph(GraphName.Trapeze);
+            handleClose();
+          }}
+          disableRipple
+        >
+          {selectedGraph === GraphName.Trapeze ? (
+            <ListItemIcon>
+              <Check />
+            </ListItemIcon>
+          ) : null}
           <Stack spacing={2} direction={"column"}>
             <Grid item sm={1}>{` - ${GraphName.Trapeze}`}</Grid>
             <Grid item sm={11}>
@@ -139,7 +189,18 @@ export const GraphMenu: React.FC<IGraphMenu> = ({
           </Stack>
         </MenuItem>
         {/** Graph.Gaussian */}
-        <MenuItem onClick={handleClose} disableRipple>
+        <MenuItem
+          onClick={(e) => {
+            setSelectedGraph(GraphName.Gaussian);
+            handleClose();
+          }}
+          disableRipple
+        >
+          {selectedGraph === GraphName.Gaussian ? (
+            <ListItemIcon>
+              <Check />
+            </ListItemIcon>
+          ) : null}
           <Stack spacing={2} direction={"column"}>
             <Grid item sm={1}>{` - ${GraphName.Gaussian}`}</Grid>
             <Grid item sm={11}>
@@ -153,6 +214,11 @@ export const GraphMenu: React.FC<IGraphMenu> = ({
         </MenuItem>
         {/** Graph.Sigmoid */}
         <MenuItem onClick={handleClose} disableRipple>
+          {selectedGraph === GraphName.Sigmoid ? (
+            <ListItemIcon>
+              <Check />
+            </ListItemIcon>
+          ) : null}
           <Stack spacing={2} direction={"column"}>
             <Grid item sm={1}>{` - ${GraphName.Sigmoid}`}</Grid>
             <Grid item sm={11}>
@@ -166,7 +232,18 @@ export const GraphMenu: React.FC<IGraphMenu> = ({
         </MenuItem>
 
         {/** Graph.RoughMountain */}
-        <MenuItem onClick={handleClose} disableRipple>
+        <MenuItem
+          onClick={(e) => {
+            setSelectedGraph(GraphName.RoughMountain);
+            handleClose();
+          }}
+          disableRipple
+        >
+          {selectedGraph === GraphName.RoughMountain ? (
+            <ListItemIcon>
+              <Check />
+            </ListItemIcon>
+          ) : null}
           <Stack spacing={2} direction={"column"}>
             <Grid item sm={1}>{` - ${GraphName.RoughMountain}`}</Grid>
             <Grid item sm={11}>
