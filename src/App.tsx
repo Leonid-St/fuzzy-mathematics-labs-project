@@ -41,7 +41,7 @@ export interface IPointStorage {
 }
 
 export const App: React.FC = () => {
-  const [alpha, setAlpha] = React.useState<number | undefined>(1);
+  const [alpha, setAlpha] = React.useState<number | undefined>();
   const [A, setA] = React.useState<number | undefined>();
   const [B, setB] = React.useState<number | undefined>();
   const [C, setC] = React.useState<number | undefined>();

@@ -21,14 +21,14 @@ export interface FuzzyClass {
   findYGraphSigmoid: (x: number, a: number, b: number) => number;
   findYGraphRoughMountain: (x: number, a: number, b: number) => number;
 
-  findXByAlphaLevelGraphS: (x: number, a: number, b: number) => number;
-  findXByAlphaLevelGraphMountain: (x: number, a: number, b: number, c: number) => number;
-  findXByAlphaLevelGraphTriangle: (x: number, a: number, b: number, c: number) => number;
-  findXByAlphaLevelGraphBackS: (x: number, a: number, b: number, c: number) => number;
-  findXByAlphaLevelGraphTrapeze: (x: number, a: number, b: number, c: number, d: number) => number;
-  findXByAlphaLevelGraphGaussian: (x: number, a: number, b: number) => number;
-  findXByAlphaLevelGraphSigmoid: (x: number, a: number, b: number) => number;
-  findXByAlphaLevelGraphRoughMountain: (x: number, a: number, b: number) => number;
+  findXByAlphaLevelGraphS: (alphaLevel: number, a: number, b: number) => number;
+  findXByAlphaLevelGraphMountain: (alphaLevel: number, a: number, b: number, c: number) => number;
+  findXByAlphaLevelGraphTriangle: (alphaLevel: number, a: number, b: number, c: number) => number;
+  findXByAlphaLevelGraphBackS: (alphaLevel: number, a: number, b: number, c: number) => number;
+  findXByAlphaLevelGraphTrapeze: (alphaLevel: number, a: number, b: number, c: number, d: number) => number;
+  findXByAlphaLevelGraphGaussian: (alphaLevel: number, a: number, b: number) => number;
+  findXByAlphaLevelGraphSigmoid: (alphaLevel: number, a: number, b: number) => number;
+  findXByAlphaLevelGraphRoughMountain: (alphaLevel: number, a: number, b: number) => number;
   // _F: (
   //   x: number,
   //   n: number,
