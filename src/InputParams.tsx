@@ -52,25 +52,22 @@ export const InputParams: React.FC<IInputParams> = ({
   const trottleA = throttle(() => {
     const parseA = validParse(AShow);
     if (parseA) setA(parseA);
-    // send the server request here
-  }, 100);
+  }, 16);
 
   const trottleB = throttle(() => {
     const parseB = validParse(BShow);
     if (parseB) setB(parseB);
-    // send the server request here
-  }, 100);
+  }, 16);
 
   const trottleC = throttle(() => {
     const parseC = validParse(CShow);
-    if (parseC) setC(parseC); // send the server request here
-  }, 100);
+    if (parseC) setC(parseC);
+  }, 16);
 
   const trottleD = throttle(() => {
     const parseD = validParse(DShow);
-    if (parseD) setC(parseD);
-    // send the server request here
-  }, 100);
+    if (parseD) setD(parseD);
+  }, 16);
 
   // useEffect(() => {
   //   if (alphaShow) {
@@ -268,10 +265,8 @@ export const InputParams: React.FC<IInputParams> = ({
                 valueLabelDisplay="auto"
                 value={parseInt(AShow) ?? 0}
                 onChange={(e, v) => {
-                  if (v !== A) {
-                    setAShow(`${v}`);
-                    trottleA();
-                  }
+                  setAShow(`${v}`);
+                  trottleA();
                 }}
               />
             </Grid>
@@ -285,10 +280,8 @@ export const InputParams: React.FC<IInputParams> = ({
                 valueLabelDisplay="auto"
                 value={Number.parseInt(BShow)}
                 onChange={(e, v) => {
-                  if (v !== B) {
-                    setBShow(`${v}`);
-                    trottleB();
-                  }
+                  setBShow(`${v}`);
+                  trottleB();
                 }}
               />
             </Grid>
@@ -302,10 +295,8 @@ export const InputParams: React.FC<IInputParams> = ({
                 valueLabelDisplay="auto"
                 value={Number.parseInt(CShow)}
                 onChange={(e, v) => {
-                  if (v !== C) {
-                    setCShow(`${v}`);
-                    trottleC();
-                  }
+                  setCShow(`${v}`);
+                  trottleC();
                 }}
               />
             </Grid>
@@ -319,10 +310,8 @@ export const InputParams: React.FC<IInputParams> = ({
                 valueLabelDisplay="auto"
                 value={Number.parseInt(DShow)}
                 onChange={(e, v) => {
-                  if (v !== A) {
-                    setDShow(`${v}`);
-                    trottleD();
-                  }
+                  setDShow(`${v}`);
+                  trottleD();
                 }}
               />
             </Grid>

@@ -8,7 +8,7 @@ import {
   XAxis,
   YAxis
 } from "recharts";
-import { IPoint } from "./App";
+import { IPoint } from "./PointService";
 
 export interface IResponsiveGraph {
   data: any;

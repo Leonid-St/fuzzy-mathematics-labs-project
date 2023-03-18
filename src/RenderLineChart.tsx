@@ -7,10 +7,14 @@ import {
   YAxis,
   Tooltip,
   Legend,
-  ResponsiveContainer
+  ResponsiveContainer,
+  ReferenceLine,
+  Dot,
+  Scatter
 } from "recharts";
 
 import { FC, useEffect, useState } from "react";
+import { IPoint } from "./PointService";
 
 type Unsubscribe = () => void;
 
@@ -130,6 +134,7 @@ export interface IRenderLineChart {
   data: any;
   width: number;
   height: number;
+  additionalPoints?: Array<IPoint>;
   tooltip?: boolean;
   dot?: boolean;
   legend?: boolean;
@@ -139,13 +144,14 @@ export const RenderLineChart: React.FC<IRenderLineChart> = ({
   data,
   width,
   height,
+  additionalPoints,
   tooltip,
   dot,
   legend
 }) => {
   return (
     <>
-      <Counter />
+      {/* <Counter /> */}
       <LineChart
         width={width}
         height={height}
@@ -153,6 +159,47 @@ export const RenderLineChart: React.FC<IRenderLineChart> = ({
         margin={{ top: 5, right: 20, bottom: 5, left: 0 }}
       >
         <Line type="monotone" dataKey="y" stroke="#8884d8" dot={dot ?? false} />
+        {additionalPoints
+          ? additionalPoints.map((p, i) => {
+              // const getNumber = (arr: any, number: any) =>
+              //   arr
+              //     .map((it: any) => {
+              //       const ch = (it >= 0 ? it : -it) + number;
+              //       return {
+              //         base: it,
+              //         result: ch >= 0 ? ch : -ch
+              //       };
+              //     })
+              //     .sort((a: any, b: any) => a.result - b.result)[0].base;
+              const getNumber = (arr: any, searchNumer: any) =>
+                arr.find(
+                  (it: any) =>
+                    Math.abs(it - searchNumer) ===
+                    Math.min(
+                      ...arr.map((it: any) => Math.abs(it - searchNumer))
+                    )
+                );
+              const near = getNumber(
+                (() => {
+                  const a = [];
+                  for (let i = 0; i < 50; i++) a.push(i);
+                  return a;
+                })(),
+                p.x
+              ); // <= тот элемент, который нам нужен
+              return (
+                <>
+                  <ReferenceLine key={`x-${i}`} x={near} stroke="red" />{" "}
+                  <ReferenceLine key={`y-${i}`} y={p.y} stroke="red" />
+                </>
+              );
+            })
+          : null}
+        {/* {additionalPoints
+          ? additionalPoints.map((p, i) => (
+              <ReferenceLine key={`y-${i}`} y={p.y} stroke="red" />
+            ))
+          : null} */}
         {/* <CartesianGrid stroke="#ccc" strokeDasharray="5 5" /> */}
         <XAxis dataKey="x" interval={5} />
         <YAxis dataKey="y" />

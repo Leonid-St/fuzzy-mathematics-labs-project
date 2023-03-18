@@ -18,27 +18,37 @@ import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import { RenderLineChart } from "./RenderLineChart";
 import { ResponsiveGraph } from "./ResponsiveGraph";
-
 import { Slider } from "@mui/material";
 
 import { off } from "process";
 import { ColorToggleButton, ToogleView } from "./toggleTabs";
 import { AllCharts } from "./AllCharts";
-export interface IPoint {
-  x: number;
-  y: number;
-}
+import { PointService } from "./PointService";
+import { throttle, debounce } from "lodash";
 
-export interface IPointStorage {
-  pointsGraphS: Array<IPoint>;
-  pointsGraphMountain: Array<IPoint>;
-  pointsGraphTriangle: Array<IPoint>;
-  pointsGraphBackS: Array<IPoint>;
-  pointsGraphTrapeze: Array<IPoint>;
-  pointsGraphGaussian: Array<IPoint>;
-  pointsGraphSigmoid: Array<IPoint>;
-  pointsGraphRoughMountain: Array<IPoint>;
-}
+import { DataGrid, GridColDef, GridValueGetterParams } from "@mui/x-data-grid";
+
+const columns: any = [
+  {
+    field: "id",
+    headerName: "alpha level",
+    width: 100,
+    hideable: true,
+    hide: true,
+    editable: true
+  },
+  {
+    field: "left",
+    headerName: "left-x",
+    width: 100,
+    editable: true
+  },
+  {
+    field: "right",
+    headerName: "right-x",
+    width: 100
+  }
+];
 
 export const App: React.FC = () => {
   const [alpha, setAlpha] = React.useState<number | undefined>();
@@ -47,89 +57,189 @@ export const App: React.FC = () => {
   const [C, setC] = React.useState<number | undefined>();
   const [D, setD] = React.useState<number | undefined>();
 
-  //const [sliderA, setsliderA] = React.useState<number | undefined>();
-  const fuzzyClass = React.useMemo(() => {
-    return new Fuzzy();
-  }, []);
-  const createPointStorage = React.useCallback(
-    //debounce(
-    () => {
-      //const fuzzyClass = React.useMemo(() => getFuzzyClass(), []);
-      const pointsGraphS: Array<IPoint> = [];
-      const pointsGraphMountain: Array<IPoint> = [];
-      const pointsGraphTriangle: Array<IPoint> = [];
-      const pointsGraphBackS: Array<IPoint> = [];
-      const pointsGraphTrapeze: Array<IPoint> = [];
-      const pointsGraphGaussian: Array<IPoint> = [];
-      const pointsGraphSigmoid: Array<IPoint> = [];
-      const pointsGraphRoughMountain: Array<IPoint> = [];
-
-      for (let i = 0; i < 50; i++) {
-        if (A && B)
-          pointsGraphS.push({
-            x: i,
-            y: fuzzyClass.findYGraphS(i, A, B)
-          });
-        if (A && B && C)
-          pointsGraphMountain.push({
-            x: i,
-            y: fuzzyClass.findYGraphMountain(i, A, B, C)
-          });
-        if (A && B && C)
-          pointsGraphTriangle.push({
-            x: i,
-            y: fuzzyClass.findYGraphTriangle(i, A, B, C)
-          });
-        if (A && B && C)
-          pointsGraphBackS.push({
-            x: i,
-            y: fuzzyClass.findYGraphBackS(i, A, B, C)
-          });
-        if (A && B && C && D)
-          pointsGraphTrapeze.push({
-            x: i,
-            y: fuzzyClass.findYGraphTrapeze(i, A, B, C, D)
-          });
-        if (A && B)
-          pointsGraphGaussian.push({
-            x: i,
-            y: fuzzyClass.findYGraphGaussian(i, A, B)
-          });
-        if (A && B)
-          pointsGraphSigmoid.push({
-            x: i,
-            y: fuzzyClass.findYGraphSigmoid(i, A, B)
-          });
-        if (A && B)
-          pointsGraphRoughMountain.push({
-            x: i,
-            y: fuzzyClass.findYGraphRoughMountain(i, A, B)
-          });
-      }
-      return {
-        pointsGraphS,
-        pointsGraphMountain,
-        pointsGraphTriangle,
-        pointsGraphBackS,
-        pointsGraphTrapeze,
-        pointsGraphGaussian,
-        pointsGraphSigmoid,
-        pointsGraphRoughMountain
-      };
-    },
-    // }, 150),
-    [A, B, C, D, fuzzyClass]
-  );
-
-  const stor: IPointStorage | undefined = createPointStorage();
-  let PointStorage: IPointStorage | any = {};
   const [alignment, setAlignment] = React.useState<ToogleView>(ToogleView.All);
-  if (stor) PointStorage = stor;
 
   const [selectedGraph, setSelectedGraph] = React.useState<
     SelectedGrapth | undefined
   >(undefined);
+  //const [sliderA, setsliderA] = React.useState<number | undefined>();
+  const fuzzyClass = React.useMemo(() => {
+    return new Fuzzy();
+  }, []);
+
+  const pointService = React.useMemo(() => new PointService(), []);
+
+  const updatePointsAB = React.useCallback(
+    //debounce(
+    //throttle(
+    () => {
+      //const fuzzyClass = React.useMemo(() => getFuzzyClass(), []);
+
+      if (A && B) {
+        pointService.calculatePointsGraphS(A, B);
+
+        pointService.calculatePointsGaussian(A, B);
+
+        pointService.calculatePointsSigmoid(A, B);
+
+        pointService.calculatePointsRoughMountain(A, B);
+      }
+      if (A && B && C) {
+        pointService.calculatePointsMountain(A, B, C);
+
+        pointService.calculatePointsTriangle(A, B, C);
+
+        pointService.calculatePointsBackS(A, B, C);
+      }
+      if (A && B && C && D) {
+        pointService.calculatePointsTrapeze(A, B, C, D);
+      }
+      // }, 1500),
+    },
+    [A, B, C, D, pointService]
+  );
+  // const updatePointsABC = React.useCallback(
+  //   //debounce(
+  //   () => {
+  //     if (A && B && C) {
+  //       pointService.calculatePointsMountain(A, B, C);
+  //       pointService.calculatePointsTriangle(A, B, C);
+  //       pointService.calculatePointsBackS(A, B, C);
+  //       if (A && B && C && D) {
+  //         pointService.calculatePointsTrapeze(A, B, C, D);
+  //       }
+  //     }
+  //   },
+  //   [A, B, C, D, pointService]
+  // );
+
+  // const updatePointsABCD = React.useCallback(
+  //   //debounce(
+  //   () => {
+  //     if (A && B && C && D) {
+  //       pointService.calculatePointsTrapeze(A, B, C, D);
+  //     }
+  //   },
+  //   [A, B, C, D, pointService]
+  // );
+
+  const updatePointsGraphS = React.useCallback(() => {
+    if (A && B) pointService.calculatePointsGraphS(A, B);
+    if (A && B && alpha) pointService.calculateAlphaLevelsGraphS(alpha, A, B);
+  }, [A, B, alpha, pointService]);
+
+  const updatePointsMountain = React.useCallback(() => {
+    if (A && B && C) pointService.calculatePointsMountain(A, B, C);
+  }, [A, B, C, pointService]);
+
+  const updatePointsTriangle = React.useCallback(() => {
+    if (A && B && C) pointService.calculatePointsTriangle(A, B, C);
+  }, [A, B, C, pointService]);
+
+  const updatePointsBackS = React.useCallback(() => {
+    if (A && B && C) pointService.calculatePointsBackS(A, B, C);
+  }, [A, B, C, pointService]);
+
+  const updatePointsTrapeze = React.useCallback(() => {
+    if (A && B && C && D) pointService.calculatePointsTrapeze(A, B, C, D);
+  }, [A, B, C, D, pointService]);
+
+  const updatePointsGaussian = React.useCallback(() => {
+    if (A && B) pointService.calculatePointsGaussian(A, B);
+  }, [A, B, pointService]);
+
+  const updatePointsSigmoid = React.useCallback(() => {
+    if (A && B) pointService.calculatePointsSigmoid(A, B);
+  }, [A, B, pointService]);
+
+  const updatePointsRoughMountain = React.useCallback(() => {
+    if (A && B) pointService.calculatePointsRoughMountain(A, B);
+  }, [A, B, pointService]);
+
+  const updatePoints = React.useCallback(
+    //throttle(
+    () => {
+      if (alignment === ToogleView.OneChart) {
+        switch (selectedGraph) {
+          case GraphName.S:
+            updatePointsGraphS();
+            break;
+          case GraphName.Mountain:
+            updatePointsMountain();
+            break;
+          case GraphName.Triangle:
+            updatePointsTriangle();
+            break;
+          case GraphName.BackS:
+            updatePointsBackS();
+            break;
+          case GraphName.Trapeze:
+            updatePointsTrapeze();
+            break;
+          case GraphName.Gaussian:
+            updatePointsGaussian();
+            break;
+          case GraphName.Sigmoid:
+            updatePointsSigmoid();
+            break;
+          case GraphName.RoughMountain:
+            updatePointsRoughMountain();
+            break;
+        }
+      }
+      if (alignment === ToogleView.All) {
+        updatePointsAB();
+      }
+      //}, 16),
+    },
+    [
+      alignment,
+      selectedGraph,
+      updatePointsAB,
+      updatePointsBackS,
+      updatePointsGaussian,
+      updatePointsGraphS,
+      updatePointsMountain,
+      updatePointsRoughMountain,
+      updatePointsSigmoid,
+      updatePointsTrapeze,
+      updatePointsTriangle
+    ]
+  );
+
+  const calculateAlphaLevels = React.useCallback(
+    (alphaLevel: number | undefined) => {
+      if (A && B && alphaLevel) {
+        pointService.calculateAlphaLevelsGraphS(alphaLevel, A, B);
+        pointService.calculateAlphaLevelsPointsGraphS(A, B);
+      }
+    },
+    [A, B, pointService]
+  );
+
+  // const updateRowGraphS = React.useCallback(() => {
+  //   pointService.alphaLevelsStructGraphS.map((s) => {})[
+  //     { alphaLevel: 1, left: 1, right: 1 }
+  //   ];
+  // }, []);
+
+  // React.useEffect(() => {
+  //   updatePointsAB();
+  // }, [A, B, C, D]);
+  // const stor: IPointStorage | undefined = createPointStorage();
+  // let PointStorage: IPointStorage | any = {};
+
+  //if (stor) PointStorage = stor;
+
   //React.useEffect(() => {}, [A, B, C, D, alpha, PointStorage, stor]);
+
+  const FOR = () => {
+    const a = [];
+    for (let i = 0; i < 100; i++) {
+      a.push(Math.random().toString(36));
+    }
+    return a;
+  };
   return (
     <div className="App">
       <Stack spacing={3}>
@@ -141,7 +251,7 @@ export const App: React.FC = () => {
         </Grid>
         <Grid item xs={11}>
           <Stack spacing={1} direction={"row"}>
-            <Grid item xs={2} minWidth={300}>
+            <Grid item xs={1} minWidth={300}>
               <Grid
                 container
                 rowSpacing={5}
@@ -155,7 +265,7 @@ export const App: React.FC = () => {
                       selectedGraph={selectedGraph}
                       setSelectedGraph={setSelectedGraph}
                       fuzzyClass={fuzzyClass}
-                      PointStorage={PointStorage}
+                      PointStorage={pointService}
                     />
                   </Grid>
                 ) : (
@@ -165,87 +275,152 @@ export const App: React.FC = () => {
                 <Grid item>
                   <InputParams
                     alpha={alpha}
-                    setAlpha={setAlpha}
+                    setAlpha={(e) => {
+                      setAlpha(e);
+                      calculateAlphaLevels(e);
+                    }}
                     A={A}
-                    setA={setA}
+                    setA={
+                      // throttle(
+                      (e) => {
+                        if (e) {
+                          setA(e);
+                          updatePoints();
+                        }
+                        //}, 1500)
+                      }
+                    }
                     B={B}
-                    setB={setB}
+                    setB={
+                      //throttle(
+                      (e) => {
+                        if (e) {
+                          setB(e);
+                          updatePoints();
+                        }
+                        // }, 16)
+                      }
+                    }
                     C={C}
-                    setC={setC}
+                    setC={
+                      //throttle(
+                      (e) => {
+                        if (e) {
+                          setC(e);
+                          updatePoints();
+                        }
+                        //    }, 16)
+                      }
+                    }
                     D={D}
-                    setD={setD}
+                    setD={
+                      //throttle(
+                      (e) => {
+                        if (e) {
+                          setD(e);
+                          updatePoints();
+                        }
+                        //}, 16)
+                      }
+                    }
                   />
                 </Grid>
               </Grid>
             </Grid>
-            <Grid item xs={10}>
+            <Grid item xs={11}>
               {alignment === ToogleView.All ? (
-                <AllCharts PointStorage={PointStorage} />
+                <AllCharts PointStorage={pointService} />
               ) : (
-                <>
-                  <Stack
-                    spacing={2}
-                    direction={"row"}
-                    textAlign={"center"}
-                    // height={"100%"}
-                  >
-                    <Grid item>
-                      {selectedGraph === GraphName.S ? (
-                        <RenderLineChart
-                          width={600}
-                          height={500}
-                          data={PointStorage.pointsGraphS}
+                <Stack
+                  spacing={2}
+                  direction={"row"}
+                  textAlign={"center"}
+                  // height={"100%"}
+                >
+                  <Grid item xs={10}>
+                    {selectedGraph === GraphName.S ? (
+                      <RenderLineChart
+                        width={600}
+                        height={500}
+                        data={pointService.pointsGraphS}
+                        additionalPoints={pointService.alphaLevelsPointsGraphS}
+                      />
+                    ) : selectedGraph === GraphName.Mountain ? (
+                      <RenderLineChart
+                        width={600}
+                        height={500}
+                        data={pointService.pointsGraphMountain}
+                      />
+                    ) : selectedGraph === GraphName.Triangle ? (
+                      <RenderLineChart
+                        width={600}
+                        height={500}
+                        data={pointService.pointsGraphTriangle}
+                      />
+                    ) : selectedGraph === GraphName.BackS ? (
+                      <RenderLineChart
+                        width={600}
+                        height={500}
+                        data={pointService.pointsGraphBackS}
+                      />
+                    ) : selectedGraph === GraphName.Trapeze ? (
+                      <RenderLineChart
+                        width={600}
+                        height={500}
+                        data={pointService.pointsGraphTrapeze}
+                      />
+                    ) : selectedGraph === GraphName.Gaussian ? (
+                      <RenderLineChart
+                        width={600}
+                        height={500}
+                        data={pointService.pointsGraphGaussian}
+                      />
+                    ) : selectedGraph === GraphName.Sigmoid ? (
+                      <RenderLineChart
+                        width={600}
+                        height={500}
+                        data={pointService.pointsGraphSigmoid}
+                      />
+                    ) : selectedGraph === GraphName.RoughMountain ? (
+                      <RenderLineChart
+                        width={600}
+                        height={500}
+                        data={pointService.pointsGraphRoughMountain}
+                      />
+                    ) : (
+                      <></>
+                    )}
+                  </Grid>
+                  {selectedGraph ? (
+                    <Grid item xs={2} minWidth={"30%"}>
+                      <Box sx={{ height: "100%", width: "100%" }}>
+                        <DataGrid
+                          rows={pointService.alphaLevelsStructGraphS.map(
+                            (s, i) => ({ id: s.alphaLevel, ...s })
+                          )}
+                          columns={columns}
+                          initialState={{
+                            pagination: {
+                              paginationModel: {
+                                pageSize: 10
+                              }
+                            }
+                          }}
+                          pageSizeOptions={[10]}
+                          //checkboxSelection
+                          disableRowSelectionOnClick
                         />
-                      ) : selectedGraph === GraphName.Mountain ? (
-                        <RenderLineChart
-                          width={600}
-                          height={500}
-                          data={PointStorage.pointsGraphMountain}
-                        />
-                      ) : selectedGraph === GraphName.Triangle ? (
-                        <RenderLineChart
-                          width={600}
-                          height={500}
-                          data={PointStorage.pointsGraphTriangle}
-                        />
-                      ) : selectedGraph === GraphName.BackS ? (
-                        <RenderLineChart
-                          width={600}
-                          height={500}
-                          data={PointStorage.pointsGraphBackS}
-                        />
-                      ) : selectedGraph === GraphName.Trapeze ? (
-                        <RenderLineChart
-                          width={600}
-                          height={500}
-                          data={PointStorage.pointsGraphTrapeze}
-                        />
-                      ) : selectedGraph === GraphName.Gaussian ? (
-                        <RenderLineChart
-                          width={600}
-                          height={500}
-                          data={PointStorage.pointsGraphGaussian}
-                        />
-                      ) : selectedGraph === GraphName.Sigmoid ? (
-                        <RenderLineChart
-                          width={600}
-                          height={500}
-                          data={PointStorage.pointsGraphSigmoid}
-                        />
-                      ) : selectedGraph === GraphName.RoughMountain ? (
-                        <RenderLineChart
-                          width={600}
-                          height={500}
-                          data={PointStorage.pointsGraphRoughMountain}
-                        />
-                      ) : (
-                        <></>
-                      )}
+                        {/* <div>
+                        {FOR().map((e, index) => (
+                          <div style={{ color: "black" }} key={index}>
+                            {e}
+                          </div>
+                        ))}
+                      </div> */}
+                      </Box>
                     </Grid>
-
-                    <Grid item></Grid>
-                  </Stack>
-                </>
+                  ) : null}
+                </Stack>
               )}
             </Grid>
           </Stack>

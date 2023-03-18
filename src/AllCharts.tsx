@@ -23,9 +23,9 @@ import { Slider } from "@mui/material";
 
 import { off } from "process";
 import { ColorToggleButton, ToogleView } from "./toggleTabs";
-import { IPointStorage } from "./App";
+import { IPointService } from "./PointService";
 interface IAllCharts {
-  PointStorage: IPointStorage;
+  PointStorage: IPointService;
 }
 export const AllCharts: React.FC<IAllCharts> = ({ PointStorage }) => {
   return (

@@ -7,11 +7,11 @@ import { FuzzyClass } from "./FuzzuClass";
 import { StyledMenu } from "../StyledMenu";
 import { GraphByNumber, GraphName, SelectedGrapth } from "./ProtocolFuzy";
 import Box from "@mui/material/Box";
-import { IPointStorage } from "../App";
 import { RenderLineChart } from "../RenderLineChart";
 import React from "react";
 import { Checkbox, ListItemIcon } from "@mui/material";
 import Check from "@mui/icons-material/Check";
+import { IPointService } from "../PointService";
 
 export const SelectGraph: React.FC = () => {
   return <></>;
@@ -21,7 +21,7 @@ interface IGraphMenu {
   fuzzyClass: FuzzyClass;
   selectedGraph: SelectedGrapth | undefined;
   setSelectedGraph: (selectedGrapth: SelectedGrapth) => void;
-  PointStorage: IPointStorage;
+  PointStorage: IPointService;
 }
 export const GraphMenu: React.FC<IGraphMenu> = ({
   fuzzyClass,
