@@ -57,7 +57,9 @@ export const App: React.FC = () => {
   const [C, setC] = React.useState<number | undefined>();
   const [D, setD] = React.useState<number | undefined>();
 
-  const [alignment, setAlignment] = React.useState<ToogleView>(ToogleView.All);
+  const [alignment, setAlignment] = React.useState<ToogleView>(
+    ToogleView.OneChart
+  );
 
   const [selectedGraph, setSelectedGraph] = React.useState<
     SelectedGrapth | undefined
@@ -123,67 +125,323 @@ export const App: React.FC = () => {
   //   [A, B, C, D, pointService]
   // );
 
-  const updatePointsGraphS = React.useCallback(() => {
-    if (A && B) pointService.calculatePointsGraphS(A, B);
-    if (A && B && alpha) pointService.calculateAlphaLevelsGraphS(alpha, A, B);
-  }, [A, B, alpha, pointService]);
+  const recalculateAlphaLevelsGraphS = React.useCallback(
+    (alphaLevel: number, a: number, b: number) => {
+      pointService.calculateAlphaLevelsGraphS(alphaLevel, a, b);
+    },
+    [pointService]
+  );
 
-  const updatePointsMountain = React.useCallback(() => {
-    if (A && B && C) pointService.calculatePointsMountain(A, B, C);
-  }, [A, B, C, pointService]);
+  const recalculatePointsAlphaLevelsGraphS = React.useCallback(
+    (a: number, b: number) => {
+      pointService.calculateAlphaLevelsPointsGraphS(a, b);
+    },
+    [pointService]
+  );
 
-  const updatePointsTriangle = React.useCallback(() => {
-    if (A && B && C) pointService.calculatePointsTriangle(A, B, C);
-  }, [A, B, C, pointService]);
+  const updateAlphaLevelsGraphS = React.useCallback(
+    (alphaLevel: number, a: number, b: number) => {
+      recalculateAlphaLevelsGraphS(alphaLevel, a, b);
+      recalculatePointsAlphaLevelsGraphS(a, b);
+    },
+    [recalculateAlphaLevelsGraphS, recalculatePointsAlphaLevelsGraphS]
+  );
+  //--//
+  const recalculateAlphaLevelsMountain = React.useCallback(
+    (alphaLevel: number, a: number, b: number, c: number) => {
+      pointService.calculateAlphaLevelsMountain(alphaLevel, a, b, c);
+    },
+    [pointService]
+  );
 
-  const updatePointsBackS = React.useCallback(() => {
-    if (A && B && C) pointService.calculatePointsBackS(A, B, C);
-  }, [A, B, C, pointService]);
+  const recalculatePointsAlphaLevelsMountain = React.useCallback(
+    (a: number, b: number, c: number) => {
+      pointService.calculateAlphaLevelsPointsMountain(a, b, c);
+    },
+    [pointService]
+  );
 
-  const updatePointsTrapeze = React.useCallback(() => {
-    if (A && B && C && D) pointService.calculatePointsTrapeze(A, B, C, D);
-  }, [A, B, C, D, pointService]);
+  const updateAlphaLevelsMountain = React.useCallback(
+    (alphaLevel: number, a: number, b: number, c: number) => {
+      recalculateAlphaLevelsMountain(alphaLevel, a, b, c);
+      recalculatePointsAlphaLevelsMountain(a, b, c);
+    },
+    [recalculateAlphaLevelsMountain, recalculatePointsAlphaLevelsMountain]
+  );
+  //--//
+  const recalculateAlphaLevelsTriangle = React.useCallback(
+    (alphaLevel: number, a: number, b: number, c: number) => {
+      pointService.calculateAlphaLevelsTriangle(alphaLevel, a, b, c);
+    },
+    [pointService]
+  );
 
-  const updatePointsGaussian = React.useCallback(() => {
-    if (A && B) pointService.calculatePointsGaussian(A, B);
-  }, [A, B, pointService]);
+  const recalculatePointsAlphaLevelsTriangle = React.useCallback(
+    (a: number, b: number, c: number) => {
+      pointService.calculateAlphaLevelsPointsTriangle(a, b, c);
+    },
+    [pointService]
+  );
 
-  const updatePointsSigmoid = React.useCallback(() => {
-    if (A && B) pointService.calculatePointsSigmoid(A, B);
-  }, [A, B, pointService]);
+  const updateAlphaLevelsTriangle = React.useCallback(
+    (alphaLevel: number, a: number, b: number, c: number) => {
+      recalculateAlphaLevelsTriangle(alphaLevel, a, b, c);
+      recalculatePointsAlphaLevelsTriangle(a, b, c);
+    },
+    [recalculateAlphaLevelsTriangle, recalculatePointsAlphaLevelsTriangle]
+  );
+  //--//
 
-  const updatePointsRoughMountain = React.useCallback(() => {
-    if (A && B) pointService.calculatePointsRoughMountain(A, B);
-  }, [A, B, pointService]);
+  const recalculateAlphaLevelsBackS = React.useCallback(
+    (alphaLevel: number, a: number, b: number, c: number) => {
+      pointService.calculateAlphaLevelsBackS(alphaLevel, a, b, c);
+    },
+    [pointService]
+  );
 
-  const updatePoints = React.useCallback(
+  const recalculatePointsAlphaLevelsBackS = React.useCallback(
+    (a: number, b: number, c: number) => {
+      pointService.calculateAlphaLevelsPointsBackS(a, b, c);
+    },
+    [pointService]
+  );
+
+  const updateAlphaLevelsBackS = React.useCallback(
+    (alphaLevel: number, a: number, b: number, c: number) => {
+      recalculateAlphaLevelsBackS(alphaLevel, a, b, c);
+      recalculatePointsAlphaLevelsBackS(a, b, c);
+    },
+    [recalculateAlphaLevelsBackS, recalculatePointsAlphaLevelsBackS]
+  );
+  //--//
+  const recalculateAlphaLevelsTrapeze = React.useCallback(
+    (alphaLevel: number, a: number, b: number, c: number, d: number) => {
+      pointService.calculateAlphaLevelsTrapeze(alphaLevel, a, b, c, d);
+    },
+    [pointService]
+  );
+
+  const recalculatePointsAlphaLevelsTrapeze = React.useCallback(
+    (a: number, b: number, c: number, d: number) => {
+      pointService.calculateAlphaLevelsPointsTrapeze(a, b, c, d);
+    },
+    [pointService]
+  );
+
+  const updateAlphaLevelsTrapeze = React.useCallback(
+    (alphaLevel: number, a: number, b: number, c: number, d: number) => {
+      recalculateAlphaLevelsTrapeze(alphaLevel, a, b, c, d);
+      recalculatePointsAlphaLevelsTrapeze(a, b, c, d);
+    },
+    [recalculateAlphaLevelsTrapeze, recalculatePointsAlphaLevelsTrapeze]
+  );
+  //--//
+  const recalculateAlphaLevelsGaussian = React.useCallback(
+    (alphaLevel: number, a: number, b: number) => {
+      pointService.calculateAlphaLevelsGaussian(alphaLevel, a, b);
+    },
+    [pointService]
+  );
+
+  const recalculatePointsAlphaLevelsGaussian = React.useCallback(
+    (a: number, b: number) => {
+      pointService.calculateAlphaLevelsPointsGaussian(a, b);
+    },
+    [pointService]
+  );
+
+  const updateAlphaLevelsGaussian = React.useCallback(
+    (alphaLevel: number, a: number, b: number) => {
+      recalculateAlphaLevelsGaussian(alphaLevel, a, b);
+      recalculatePointsAlphaLevelsGaussian(a, b);
+    },
+    [recalculateAlphaLevelsGaussian, recalculatePointsAlphaLevelsGaussian]
+  );
+  //--//
+
+  const recalculateAlphaLevelsSigmoid = React.useCallback(
+    (alphaLevel: number, a: number, b: number) => {
+      pointService.calculateAlphaLevelsSigmoid(alphaLevel, a, b);
+    },
+    [pointService]
+  );
+
+  const recalculatePointsAlphaLevelsSigmoid = React.useCallback(
+    (a: number, b: number) => {
+      pointService.calculateAlphaLevelsPointsSigmoid(a, b);
+    },
+    [pointService]
+  );
+
+  const updateAlphaLevelsSigmoid = React.useCallback(
+    (alphaLevel: number, a: number, b: number) => {
+      recalculateAlphaLevelsSigmoid(alphaLevel, a, b);
+      recalculatePointsAlphaLevelsSigmoid(a, b);
+    },
+    [recalculateAlphaLevelsSigmoid, recalculatePointsAlphaLevelsSigmoid]
+  );
+  //--//
+  const recalculateAlphaLevelsRoughMountain = React.useCallback(
+    (alphaLevel: number, a: number, b: number) => {
+      pointService.calculateAlphaLevelsRoughMountain(alphaLevel, a, b);
+    },
+    [pointService]
+  );
+
+  const recalculatePointsAlphaLevelsRoughMountain = React.useCallback(
+    (a: number, b: number) => {
+      pointService.calculateAlphaLevelsPointsRoughMountain(a, b);
+    },
+    [pointService]
+  );
+
+  const updateAlphaLevelsRoughMountain = React.useCallback(
+    (alphaLevel: number, a: number, b: number) => {
+      recalculateAlphaLevelsRoughMountain(alphaLevel, a, b);
+      recalculatePointsAlphaLevelsRoughMountain(a, b);
+    },
+    [
+      recalculateAlphaLevelsRoughMountain,
+      recalculatePointsAlphaLevelsRoughMountain
+    ]
+  );
+  //--/
+  const updateAlphaLevels = React.useCallback(
     //throttle(
-    () => {
+    (alphaLevels: number, a: number, b: number, c?: number, d?: number) => {
       if (alignment === ToogleView.OneChart) {
         switch (selectedGraph) {
           case GraphName.S:
-            updatePointsGraphS();
+            updateAlphaLevelsGraphS(alphaLevels, a, b);
             break;
           case GraphName.Mountain:
-            updatePointsMountain();
+            if (c) updateAlphaLevelsMountain(alphaLevels, a, b, c);
             break;
           case GraphName.Triangle:
-            updatePointsTriangle();
+            if (c) updateAlphaLevelsTriangle(alphaLevels, a, b, c);
             break;
           case GraphName.BackS:
-            updatePointsBackS();
+            if (c) updateAlphaLevelsBackS(alphaLevels, a, b, c);
             break;
           case GraphName.Trapeze:
-            updatePointsTrapeze();
+            if (c && d) updateAlphaLevelsTrapeze(alphaLevels, a, b, c, d);
             break;
           case GraphName.Gaussian:
-            updatePointsGaussian();
+            updateAlphaLevelsGaussian(alphaLevels, a, b);
             break;
           case GraphName.Sigmoid:
-            updatePointsSigmoid();
+            updateAlphaLevelsSigmoid(alphaLevels, a, b);
             break;
           case GraphName.RoughMountain:
-            updatePointsRoughMountain();
+            updateAlphaLevelsRoughMountain(alphaLevels, a, b);
+            break;
+        }
+      }
+      if (alignment === ToogleView.All) {
+        //updatePointsAB();
+      }
+      //}, 16),
+    },
+    [
+      alignment,
+      selectedGraph,
+      updateAlphaLevelsBackS,
+      updateAlphaLevelsGaussian,
+      updateAlphaLevelsGraphS,
+      updateAlphaLevelsMountain,
+      updateAlphaLevelsRoughMountain,
+      updateAlphaLevelsSigmoid,
+      updateAlphaLevelsTrapeze,
+      updateAlphaLevelsTriangle
+    ]
+  );
+
+  const updatePointsGraphS = React.useCallback(
+    (a: number, b: number) => {
+      pointService.calculatePointsGraphS(a, b);
+      if (alpha) updateAlphaLevelsGraphS(alpha, a, b);
+    },
+    [pointService, alpha, updateAlphaLevelsGraphS]
+  );
+
+  const updatePointsMountain = React.useCallback(
+    (a: number, b: number, c: number) => {
+      pointService.calculatePointsMountain(a, b, c);
+      if (alpha) updateAlphaLevelsMountain(alpha, a, b, c);
+    },
+    [alpha, pointService, updateAlphaLevelsMountain]
+  );
+
+  const updatePointsTriangle = React.useCallback(
+    (a: number, b: number, c: number) => {
+      pointService.calculatePointsTriangle(a, b, c);
+    },
+    [pointService]
+  );
+
+  const updatePointsBackS = React.useCallback(
+    (a: number, b: number, c: number) => {
+      pointService.calculatePointsBackS(a, b, c);
+    },
+    [pointService]
+  );
+
+  const updatePointsTrapeze = React.useCallback(
+    (a: number, b: number, c: number, d: number) => {
+      pointService.calculatePointsTrapeze(a, b, c, d);
+    },
+    [pointService]
+  );
+
+  const updatePointsGaussian = React.useCallback(
+    (a: number, b: number) => {
+      pointService.calculatePointsGaussian(a, b);
+    },
+    [pointService]
+  );
+
+  const updatePointsSigmoid = React.useCallback(
+    (a: number, b: number) => {
+      pointService.calculatePointsSigmoid(a, b);
+    },
+    [pointService]
+  );
+
+  const updatePointsRoughMountain = React.useCallback(
+    (a: number, b: number) => {
+      pointService.calculatePointsRoughMountain(a, b);
+    },
+    [pointService]
+  );
+
+  const updatePoints = React.useCallback(
+    //throttle(
+    (a: number, b: number, c?: number, d?: number) => {
+      if (alignment === ToogleView.OneChart) {
+        switch (selectedGraph) {
+          case GraphName.S:
+            updatePointsGraphS(a, b);
+            break;
+          case GraphName.Mountain:
+            if (c) updatePointsMountain(a, b, c);
+            break;
+          case GraphName.Triangle:
+            if (c) updatePointsTriangle(a, b, c);
+            break;
+          case GraphName.BackS:
+            if (c) updatePointsBackS(a, b, c);
+            break;
+          case GraphName.Trapeze:
+            if (c && d) updatePointsTrapeze(a, b, c, d);
+            break;
+          case GraphName.Gaussian:
+            updatePointsGaussian(a, b);
+            break;
+          case GraphName.Sigmoid:
+            updatePointsSigmoid(a, b);
+            break;
+          case GraphName.RoughMountain:
+            updatePointsRoughMountain(a, b);
             break;
         }
       }
@@ -205,16 +463,6 @@ export const App: React.FC = () => {
       updatePointsTrapeze,
       updatePointsTriangle
     ]
-  );
-
-  const calculateAlphaLevels = React.useCallback(
-    (alphaLevel: number | undefined) => {
-      if (A && B && alphaLevel) {
-        pointService.calculateAlphaLevelsGraphS(alphaLevel, A, B);
-        pointService.calculateAlphaLevelsPointsGraphS(A, B);
-      }
-    },
-    [A, B, pointService]
   );
 
   // const updateRowGraphS = React.useCallback(() => {
@@ -240,6 +488,54 @@ export const App: React.FC = () => {
     }
     return a;
   };
+
+  // console.log({ pointService });
+
+  const prepareDataForDataGrid = (arr: Array<any>) => {
+    return arr.map((s: any, i: number) => ({ id: s.alphaLevel, ...s }));
+  };
+
+  const getDataForDataGrid = () => {
+    if (alignment === ToogleView.OneChart) {
+      switch (selectedGraph) {
+        case GraphName.S:
+          return prepareDataForDataGrid(pointService.alphaLevelsStructGraphS);
+        case GraphName.Mountain:
+          return prepareDataForDataGrid(
+            pointService.alphaLevelsStructGraphMountin
+          );
+        case GraphName.Triangle:
+          return prepareDataForDataGrid(
+            pointService.alphaLevelsStructGraphTriangle
+          );
+        case GraphName.BackS:
+          return prepareDataForDataGrid(
+            pointService.alphaLevelsStructGraphBackS
+          );
+        case GraphName.Trapeze:
+          return prepareDataForDataGrid(
+            pointService.alphaLevelsStructGraphTrapeze
+          );
+        case GraphName.Gaussian:
+          return prepareDataForDataGrid(
+            pointService.alphaLevelsStructGraphGaussian
+          );
+        case GraphName.Sigmoid:
+          return prepareDataForDataGrid(
+            pointService.alphaLevelsStructGraphSigmoid
+          );
+        case GraphName.RoughMountain:
+          console.log(
+            "console.log(pointService.alphaLevelsStructGraphRoughMountain);"
+          );
+          console.log(pointService.alphaLevelsStructGraphRoughMountain);
+          return prepareDataForDataGrid(
+            pointService.alphaLevelsStructGraphRoughMountain
+          );
+      }
+    }
+  };
+
   return (
     <div className="App">
       <Stack spacing={3}>
@@ -275,17 +571,22 @@ export const App: React.FC = () => {
                 <Grid item>
                   <InputParams
                     alpha={alpha}
-                    setAlpha={(e) => {
-                      setAlpha(e);
-                      calculateAlphaLevels(e);
+                    setAlpha={(alphaLevels) => {
+                      setAlpha(alphaLevels);
+                      if (alphaLevels && A && B) {
+                        updateAlphaLevels(alphaLevels, A, B, C, D);
+                      }
                     }}
                     A={A}
                     setA={
                       // throttle(
-                      (e) => {
-                        if (e) {
-                          setA(e);
-                          updatePoints();
+                      (a) => {
+                        if (a) {
+                          setA(a);
+                          if (a && B) {
+                            updatePoints(a, B, C, D);
+                            if (alpha) updateAlphaLevels(alpha, a, B, C, D);
+                          }
                         }
                         //}, 1500)
                       }
@@ -293,10 +594,11 @@ export const App: React.FC = () => {
                     B={B}
                     setB={
                       //throttle(
-                      (e) => {
-                        if (e) {
-                          setB(e);
-                          updatePoints();
+                      (b) => {
+                        setB(b);
+                        if (A && b) {
+                          updatePoints(A, b, C, D);
+                          if (alpha) updateAlphaLevels(alpha, A, b, C, D);
                         }
                         // }, 16)
                       }
@@ -304,10 +606,11 @@ export const App: React.FC = () => {
                     C={C}
                     setC={
                       //throttle(
-                      (e) => {
-                        if (e) {
-                          setC(e);
-                          updatePoints();
+                      (c) => {
+                        setC(c);
+                        if (A && B && c) {
+                          updatePoints(A, B, c, D);
+                          if (alpha) updateAlphaLevels(alpha, A, B, c, D);
                         }
                         //    }, 16)
                       }
@@ -315,10 +618,11 @@ export const App: React.FC = () => {
                     D={D}
                     setD={
                       //throttle(
-                      (e) => {
-                        if (e) {
-                          setD(e);
-                          updatePoints();
+                      (d) => {
+                        setD(d);
+                        if (A && B && C && d) {
+                          updatePoints(A, B, C, d);
+                          if (alpha) updateAlphaLevels(alpha, A, B, C, d);
                         }
                         //}, 16)
                       }
@@ -344,48 +648,81 @@ export const App: React.FC = () => {
                         height={500}
                         data={pointService.pointsGraphS}
                         additionalPoints={pointService.alphaLevelsPointsGraphS}
+                        dot
                       />
                     ) : selectedGraph === GraphName.Mountain ? (
                       <RenderLineChart
                         width={600}
                         height={500}
                         data={pointService.pointsGraphMountain}
+                        additionalPoints={
+                          pointService.alphaLevelsPointsGraphMountain
+                        }
+                        dot
                       />
                     ) : selectedGraph === GraphName.Triangle ? (
                       <RenderLineChart
                         width={600}
                         height={500}
                         data={pointService.pointsGraphTriangle}
+                        additionalPoints={
+                          pointService.alphaLevelsPointsGraphTriangle
+                        }
+                        dot
                       />
                     ) : selectedGraph === GraphName.BackS ? (
                       <RenderLineChart
                         width={600}
                         height={500}
                         data={pointService.pointsGraphBackS}
+                        additionalPoints={
+                          pointService.alphaLevelsPointsGraphBackS
+                        }
+                        dot
                       />
                     ) : selectedGraph === GraphName.Trapeze ? (
                       <RenderLineChart
                         width={600}
                         height={500}
                         data={pointService.pointsGraphTrapeze}
+                        additionalPoints={
+                          pointService.alphaLevelsPointsGraphTrapeze
+                        }
+                        dot
                       />
                     ) : selectedGraph === GraphName.Gaussian ? (
                       <RenderLineChart
                         width={600}
                         height={500}
                         data={pointService.pointsGraphGaussian}
+                        additionalPoints={
+                          pointService.alphaLevelsPointsGraphGaussian
+                        }
+                        dot
                       />
                     ) : selectedGraph === GraphName.Sigmoid ? (
                       <RenderLineChart
                         width={600}
                         height={500}
                         data={pointService.pointsGraphSigmoid}
+                        additionalPoints={
+                          pointService.alphaLevelsPointsGraphSigmoid
+                        }
+                        dot
                       />
                     ) : selectedGraph === GraphName.RoughMountain ? (
                       <RenderLineChart
                         width={600}
                         height={500}
                         data={pointService.pointsGraphRoughMountain}
+                        additionalPoints={(() => {
+                          console.log(
+                            "pointService.alphaLevelsPointsGraphRoughMountain",
+                            pointService.alphaLevelsPointsGraphRoughMountain
+                          );
+                          return pointService.alphaLevelsPointsGraphRoughMountain;
+                        })()}
+                        dot
                       />
                     ) : (
                       <></>
@@ -395,9 +732,7 @@ export const App: React.FC = () => {
                     <Grid item xs={2} minWidth={"30%"}>
                       <Box sx={{ height: "100%", width: "100%" }}>
                         <DataGrid
-                          rows={pointService.alphaLevelsStructGraphS.map(
-                            (s, i) => ({ id: s.alphaLevel, ...s })
-                          )}
+                          rows={getDataForDataGrid() ?? []}
                           columns={columns}
                           initialState={{
                             pagination: {

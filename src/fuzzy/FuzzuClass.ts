@@ -49,6 +49,24 @@ export interface FuzzyStruct {
 
 
 export class Fuzzy implements FuzzyClass {
+
+
+
+  //  internal class Mu1GraphCalculator : IGraphCalculator
+  // {
+  //         public double Calculate(double x, double a, double b, double c, double d)
+  //   {
+  //     if (x < a)
+  //       return 0;
+  //     if (x >= a && x < (a + b) / 2)
+  //       return 2 * Math.Pow(x - a, 2) / Math.Pow(b - a, 2);
+  //     if (x >= (a + b) / 2 && x < b)
+  //       return 1 - 2 * Math.Pow(x - b, 2) / Math.Pow(b - a, 2);
+  //     return 1;
+  //   }
+
+
+
   private findYGraphSCashe: any = {}
   findYGraphS(x: number, a: number, b: number) {
     const key = `k${x}k${a}k${b}`;
@@ -57,12 +75,19 @@ export class Fuzzy implements FuzzyClass {
       return this.findYGraphSCashe[key]
     }
     let F = 0;
-    if (x <= a) F = 0;
-    if (a <= x && x <= (a + b) / 2)
-      F = (2 * Math.pow(x - a, 2)) / Math.pow(b - a, 2);
-    if ((a + b) / 2 <= x && x <= b)
-      F = 1 - (2 * Math.pow(x - b, 2)) / Math.pow(b - a, 2);
-    if (x >= b) F = 1;
+    // if (x < a) F = 0;
+    // if (a  x && x < (a + b) / 2)
+    //   F = (2 * Math.pow(x - a, 2)) / Math.pow(b - a, 2);
+    // if ((a + b) / 2 <= x && x <= b)
+    //   F = 1 - (2 * Math.pow(x - b, 2)) / Math.pow(b - a, 2);
+    // if (x >= b) F = 1;
+
+    if (x < a)
+      F = 0;
+    if (x >= a && x < (a + b) / 2)
+      F = 2 * Math.pow(x - a, 2) / Math.pow(b - a, 2);
+    if (x >= (a + b) / 2 && x < b)
+      F = 1 - 2 * Math.pow(x - b, 2) / Math.pow(b - a, 2);
     this.findYGraphSCashe[key] = F;
     return F;
   };
@@ -73,6 +98,9 @@ export class Fuzzy implements FuzzyClass {
     if (this.findYGraphMountainCashe[key]) {
       return this.findYGraphMountainCashe[key]
     }
+
+
+
     let F = 0;
     if (x <= a) F = 0;
     if (a <= x && x <= (a + b) / 2)
@@ -244,32 +272,44 @@ export class Fuzzy implements FuzzyClass {
   //   return F;
   // },
 
-
+  // public FuzzyStruct CalculateFuzzyStruct(double alphaLevel, double a, double b, double c, double d) {
+  //   if (alphaLevel <= 0.5)
+  //     return new FuzzyStruct(
+  //       alphaLevel,
+  //       a + Math.Sqrt(alphaLevel * (b - a) * (b - a) / 2),
+  //       null
+  //     );
+  //   return new FuzzyStruct(
+  //     alphaLevel,
+  //     null,
+  //     b + -1 * Math.Sqrt((1 - alphaLevel) * (b - a) * (b - a) / 2)
+  //   );
+  // }
   findXByAlphaLevelGraphS(alphaLevel: number, a: number, b: number) {
     //let _F = {};
     if (alphaLevel <= 0.5)
       return {
         alphaLevel,
-        left: a + Math.sqrt(alphaLevel * (b - a) * (b - a) / 2),
+        left: a + Math.sqrt(alphaLevel * (b - a) * (b - a) / 2.0),
         right: undefined
       }
     return {
       alphaLevel,
       left: undefined,
-      right: b + -1 * Math.sqrt((1 - alphaLevel) * (b - a) * (b - a) / 2)
+      right: b + (-1.0 * Math.sqrt((1.0 - alphaLevel) * (b - a) * (b - a) / 2.0))
     }
   };
   findXByAlphaLevelGraphMountain(alphaLevel: number, a: number, b: number, c: number) {
     if (alphaLevel <= 0.5)
       return {
         alphaLevel,
-        left: this.findXByAlphaLevelGraphS(alphaLevel, a, b,).left,
-        right: this.findXByAlphaLevelGraphS(alphaLevel, c, c + b - a).right
+        left: this.findXByAlphaLevelGraphS(alphaLevel, a, b).left,
+        right: this.findXByAlphaLevelGraphS(1.0 - alphaLevel, c, c + b - a).right
       }
     return {
       alphaLevel,
       left: this.findXByAlphaLevelGraphS(alphaLevel, a, b).right,
-      right: this.findXByAlphaLevelGraphS(alphaLevel, c, c + b - a).left
+      right: this.findXByAlphaLevelGraphS(1.0 - alphaLevel, c, c + b - a).left
     }
   };
   findXByAlphaLevelGraphTriangle(alphaLevel: number, a: number, b: number, c: number) {
@@ -355,8 +395,8 @@ export class Fuzzy implements FuzzyClass {
     var rightB = b + (b / 100 * 30);  // На 30% БОЛЬШЕ
     return {
       alphaLevel,
-      left: this.findXByAlphaLevelGraphSigmoid(alphaLevel, a, leftB).right,
-      right: this.findXByAlphaLevelGraphSigmoid(alphaLevel, a, rightB).left
+      left: this.findXByAlphaLevelGraphGaussian(alphaLevel, a, leftB).right,
+      right: this.findXByAlphaLevelGraphGaussian(alphaLevel, a, rightB).left
     }
   }
 

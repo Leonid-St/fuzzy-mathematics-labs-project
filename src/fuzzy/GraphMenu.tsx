@@ -213,7 +213,13 @@ export const GraphMenu: React.FC<IGraphMenu> = ({
           </Stack>
         </MenuItem>
         {/** Graph.Sigmoid */}
-        <MenuItem onClick={handleClose} disableRipple>
+        <MenuItem
+          onClick={(e) => {
+            setSelectedGraph(GraphName.Sigmoid);
+            handleClose();
+          }}
+          disableRipple
+        >
           {selectedGraph === GraphName.Sigmoid ? (
             <ListItemIcon>
               <Check />

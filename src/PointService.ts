@@ -34,8 +34,8 @@ export interface IPointService {
 
     //
     alphaLevelsStructGraphS: FuzzyStruct[];
-    alphaLevelsStructMountin: FuzzyStruct[];
-    alphaLevelsStructTriangle: FuzzyStruct[];
+    alphaLevelsStructGraphMountin: FuzzyStruct[];
+    alphaLevelsStructGraphTriangle: FuzzyStruct[];
     alphaLevelsStructGraphBackS: FuzzyStruct[];
     alphaLevelsStructGraphTrapeze: FuzzyStruct[];
     alphaLevelsStructGraphGaussian: FuzzyStruct[];
@@ -75,28 +75,28 @@ export interface IPointService {
 export class PointService implements IPointService {
 
     private fuzzyClass = new Fuzzy();
-    public countPoints = 50;
-    public pointsGraphS: IPoint[] = [];
-    public pointsGraphMountain: IPoint[] = [];
-    public pointsGraphTriangle: IPoint[] = [];
-    public pointsGraphBackS: IPoint[] = [];
-    public pointsGraphTrapeze: IPoint[] = [];
-    public pointsGraphGaussian: IPoint[] = [];
-    public pointsGraphSigmoid: IPoint[] = [];
-    public pointsGraphRoughMountain: IPoint[] = [];
+    countPoints = 50;
+    pointsGraphS: IPoint[] = [];
+    pointsGraphMountain: IPoint[] = [];
+    pointsGraphTriangle: IPoint[] = [];
+    pointsGraphBackS: IPoint[] = [];
+    pointsGraphTrapeze: IPoint[] = [];
+    pointsGraphGaussian: IPoint[] = [];
+    pointsGraphSigmoid: IPoint[] = [];
+    pointsGraphRoughMountain: IPoint[] = [];
     //alphalevels
-    public alphaLevelsPointsGraphS: IPoint[] = [];
-    public alphaLevelsPointsGraphMountain: IPoint[] = [];
-    public alphaLevelsPointsGraphTriangle: IPoint[] = [];
-    public alphaLevelsPointsGraphBackS: IPoint[] = [];
-    public alphaLevelsPointsGraphTrapeze: IPoint[] = [];
-    public alphaLevelsPointsGraphGaussian: IPoint[] = [];
-    public alphaLevelsPointsGraphSigmoid: IPoint[] = [];
-    public alphaLevelsPointsGraphRoughMountain: IPoint[] = [];
+    alphaLevelsPointsGraphS: IPoint[] = [];
+    alphaLevelsPointsGraphMountain: IPoint[] = [];
+    alphaLevelsPointsGraphTriangle: IPoint[] = [];
+    alphaLevelsPointsGraphBackS: IPoint[] = [];
+    alphaLevelsPointsGraphTrapeze: IPoint[] = [];
+    alphaLevelsPointsGraphGaussian: IPoint[] = [];
+    alphaLevelsPointsGraphSigmoid: IPoint[] = [];
+    alphaLevelsPointsGraphRoughMountain: IPoint[] = [];
     //
     alphaLevelsStructGraphS: FuzzyStruct[] = [];
-    alphaLevelsStructMountin: FuzzyStruct[] = [];
-    alphaLevelsStructTriangle: FuzzyStruct[] = [];
+    alphaLevelsStructGraphMountin: FuzzyStruct[] = [];
+    alphaLevelsStructGraphTriangle: FuzzyStruct[] = [];
     alphaLevelsStructGraphBackS: FuzzyStruct[] = [];
     alphaLevelsStructGraphTrapeze: FuzzyStruct[] = [];
     alphaLevelsStructGraphGaussian: FuzzyStruct[] = [];
@@ -210,7 +210,15 @@ export class PointService implements IPointService {
     calculateAlphaLevelsGraphS(countAlphaLevels: number, A: number, B: number) {
         const step = 1 / countAlphaLevels;
         const alphaLevelsStructGraphS: FuzzyStruct[] = [];
-        for (let i = 0; i < 1; i += step) {
+        for (let i = 0; i <= 1; i += step) {
+            // console.log("findXByAlphaLevelGraphS(i, A, B)");
+            // console.log("A");
+            // console.log(A);
+            // console.log("B");
+            // console.log(B);
+            // console.log("i");
+            // console.log(i);
+            // console.log(this.fuzzyClass.findXByAlphaLevelGraphS(i, A, B));
             alphaLevelsStructGraphS.push(this.fuzzyClass.findXByAlphaLevelGraphS(i, A, B));
         }
         this.alphaLevelsStructGraphS = alphaLevelsStructGraphS;
@@ -219,26 +227,26 @@ export class PointService implements IPointService {
     calculateAlphaLevelsMountain(countAlphaLevels: number, A: number, B: number, C: number) {
         const step = 1 / countAlphaLevels;
         const alphaLevelsStructMountin: FuzzyStruct[] = [];
-        for (let i = 0; i < 1; i += step) {
+        for (let i = 0; i <= 1; i += step) {
             alphaLevelsStructMountin.push(this.fuzzyClass.findXByAlphaLevelGraphMountain(i, A, B, C));
         }
-        this.alphaLevelsStructMountin = alphaLevelsStructMountin;
+        this.alphaLevelsStructGraphMountin = alphaLevelsStructMountin;
 
     };
     calculateAlphaLevelsTriangle(countAlphaLevels: number, A: number, B: number, C: number) {
         const step = 1 / countAlphaLevels;
         const alphaLevelsStructTriangle: FuzzyStruct[] = [];
-        for (let i = 0; i < 1; i += step) {
+        for (let i = 0; i <= 1; i += step) {
             alphaLevelsStructTriangle.push(this.fuzzyClass.findXByAlphaLevelGraphTriangle(i, A, B, C));
         }
-        this.alphaLevelsStructTriangle = alphaLevelsStructTriangle;
+        this.alphaLevelsStructGraphTriangle = alphaLevelsStructTriangle;
 
 
     };
     calculateAlphaLevelsBackS(countAlphaLevels: number, A: number, B: number, C: number) {
         const step = 1 / countAlphaLevels;
         const alphaLevelsStructGraphBackS: FuzzyStruct[] = [];
-        for (let i = 0; i < 1; i += step) {
+        for (let i = 0; i <= 1; i += step) {
             alphaLevelsStructGraphBackS.push(this.fuzzyClass.findXByAlphaLevelGraphBackS(i, A, B, C));
         }
         this.alphaLevelsStructGraphBackS = alphaLevelsStructGraphBackS;
@@ -248,7 +256,7 @@ export class PointService implements IPointService {
     calculateAlphaLevelsTrapeze(countAlphaLevels: number, A: number, B: number, C: number, D: number) {
         const step = 1 / countAlphaLevels;
         const alphaLevelsStructGraphTrapeze: FuzzyStruct[] = [];
-        for (let i = 0; i < 1; i += step) {
+        for (let i = 0; i <= 1; i += step) {
             alphaLevelsStructGraphTrapeze.push(this.fuzzyClass.findXByAlphaLevelGraphTrapeze(i, A, B, C, D));
         }
         this.alphaLevelsStructGraphTrapeze = alphaLevelsStructGraphTrapeze;
@@ -256,7 +264,7 @@ export class PointService implements IPointService {
     calculateAlphaLevelsGaussian(countAlphaLevels: number, A: number, B: number) {
         const step = 1 / countAlphaLevels;
         const alphaLevelsStructGraphGaussian: FuzzyStruct[] = [];
-        for (let i = 0; i < 1; i += step) {
+        for (let i = 0; i <= 1; i += step) {
             alphaLevelsStructGraphGaussian.push(this.fuzzyClass.findXByAlphaLevelGraphGaussian(i, A, B));
         }
         this.alphaLevelsStructGraphGaussian = alphaLevelsStructGraphGaussian;
@@ -264,7 +272,7 @@ export class PointService implements IPointService {
     calculateAlphaLevelsSigmoid(countAlphaLevels: number, A: number, B: number) {
         const step = 1 / countAlphaLevels;
         const alphaLevelsStructGraphSigmoid: FuzzyStruct[] = [];
-        for (let i = 0; i < 1; i += step) {
+        for (let i = 0; i <= 1; i += step) {
             alphaLevelsStructGraphSigmoid.push(this.fuzzyClass.findXByAlphaLevelGraphSigmoid(i, A, B));
         }
         this.alphaLevelsStructGraphSigmoid = alphaLevelsStructGraphSigmoid;
@@ -272,7 +280,7 @@ export class PointService implements IPointService {
     calculateAlphaLevelsRoughMountain(countAlphaLevels: number, A: number, B: number) {
         const step = 1 / countAlphaLevels;
         const alphaLevelsStructGraphRoughMountain: FuzzyStruct[] = [];
-        for (let i = 0; i < 1; i += step) {
+        for (let i = 0; i <= 1; i += step) {
             alphaLevelsStructGraphRoughMountain.push(this.fuzzyClass.findXByAlphaLevelGraphRoughMountain(i, A, B));
         }
         this.alphaLevelsStructGraphRoughMountain = alphaLevelsStructGraphRoughMountain;
@@ -310,21 +318,21 @@ export class PointService implements IPointService {
 
 
 
-        for (let i = 0; i < this.alphaLevelsStructMountin.length; i += 1) {
-            const point = this.alphaLevelsStructMountin[i].left;
+        for (let i = 0; i < this.alphaLevelsStructGraphMountin.length; i += 1) {
+            const point = this.alphaLevelsStructGraphMountin[i].left;
             if (point)
                 alphaLevelsPointsGraphMountain.push({
                     x: point,
-                    y: this.alphaLevelsStructMountin[i].alphaLevel,
+                    y: this.alphaLevelsStructGraphMountin[i].alphaLevel,
                 });
         }
 
-        for (let i = 0; i < this.alphaLevelsStructMountin.length; i += 1) {
-            const point = this.alphaLevelsStructMountin[i].right;
+        for (let i = 0; i < this.alphaLevelsStructGraphMountin.length; i += 1) {
+            const point = this.alphaLevelsStructGraphMountin[i].right;
             if (point)
                 alphaLevelsPointsGraphMountain.push({
                     x: point,
-                    y: this.alphaLevelsStructMountin[i].alphaLevel,
+                    y: this.alphaLevelsStructGraphMountin[i].alphaLevel,
                 });
         }
 
@@ -335,21 +343,21 @@ export class PointService implements IPointService {
 
 
 
-        for (let i = 0; i < this.alphaLevelsStructTriangle.length; i += 1) {
-            const point = this.alphaLevelsStructTriangle[i].left;
+        for (let i = 0; i < this.alphaLevelsStructGraphTriangle.length; i += 1) {
+            const point = this.alphaLevelsStructGraphTriangle[i].left;
             if (point)
                 alphaLevelsPointsGraphTriangle.push({
                     x: point,
-                    y: this.alphaLevelsStructTriangle[i].alphaLevel,
+                    y: this.alphaLevelsStructGraphTriangle[i].alphaLevel,
                 });
         }
 
-        for (let i = 0; i < this.alphaLevelsStructTriangle.length; i += 1) {
-            const point = this.alphaLevelsStructTriangle[i].right;
+        for (let i = 0; i < this.alphaLevelsStructGraphTriangle.length; i += 1) {
+            const point = this.alphaLevelsStructGraphTriangle[i].right;
             if (point)
                 alphaLevelsPointsGraphTriangle.push({
                     x: point,
-                    y: this.alphaLevelsStructTriangle[i].alphaLevel,
+                    y: this.alphaLevelsStructGraphTriangle[i].alphaLevel,
                 });
         }
 
@@ -479,5 +487,7 @@ export class PointService implements IPointService {
         }
 
         this.alphaLevelsPointsGraphRoughMountain = alphaLevelsPointsGraphRoughMountain;
+        console.log(' console.log(this.alphaLevelsPointsGraphRoughMountain)')
+        console.log(this.alphaLevelsPointsGraphRoughMountain)
     }
 }
