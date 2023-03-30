@@ -21,7 +21,7 @@ import { ResponsiveGraph } from "./ResponsiveGraph";
 import { Slider } from "@mui/material";
 
 import { off } from "process";
-import { ColorToggleButton, ToogleView } from "./toggleTabs";
+import { ColorToggleButton, ToogleView } from "./toggleTabsOneOrAll";
 import { AllCharts } from "./AllCharts";
 import { PointService } from "./PointService";
 import { throttle, debounce } from "lodash";
@@ -49,8 +49,13 @@ const columns: any = [
     width: 100
   }
 ];
-
-export const App: React.FC = () => {
+interface IApp{
+  pointService: PointService;
+  showTable?: boolean;
+  selectedGraph?: SelectedGrapth;
+  setSelectedGraph: (selectedGraph: SelectedGrapth) => void;
+}
+export const App: React.FC<IApp> = ({pointService,showTable = false , selectedGraph , setSelectedGraph}) => {
   const [alpha, setAlpha] = React.useState<number | undefined>();
   const [A, setA] = React.useState<number | undefined>();
   const [B, setB] = React.useState<number | undefined>();
@@ -61,15 +66,13 @@ export const App: React.FC = () => {
     ToogleView.OneChart
   );
 
-  const [selectedGraph, setSelectedGraph] = React.useState<
-    SelectedGrapth | undefined
-  >(undefined);
+ 
   //const [sliderA, setsliderA] = React.useState<number | undefined>();
   const fuzzyClass = React.useMemo(() => {
     return new Fuzzy();
   }, []);
 
-  const pointService = React.useMemo(() => new PointService(), []);
+ 
 
   const updatePointsAB = React.useCallback(
     //debounce(
@@ -481,14 +484,6 @@ export const App: React.FC = () => {
 
   //React.useEffect(() => {}, [A, B, C, D, alpha, PointStorage, stor]);
 
-  const FOR = () => {
-    const a = [];
-    for (let i = 0; i < 100; i++) {
-      a.push(Math.random().toString(36));
-    }
-    return a;
-  };
-
   // console.log({ pointService });
 
   const prepareDataForDataGrid = (arr: Array<any>) => {
@@ -502,7 +497,7 @@ export const App: React.FC = () => {
           return prepareDataForDataGrid(pointService.alphaLevelsStructGraphS);
         case GraphName.Mountain:
           return prepareDataForDataGrid(
-            pointService.alphaLevelsStructGraphMountin
+            pointService.alphaLevelsStructGraphMountain
           );
         case GraphName.Triangle:
           return prepareDataForDataGrid(
@@ -716,10 +711,6 @@ export const App: React.FC = () => {
                         height={500}
                         data={pointService.pointsGraphRoughMountain}
                         additionalPoints={(() => {
-                          console.log(
-                            "pointService.alphaLevelsPointsGraphRoughMountain",
-                            pointService.alphaLevelsPointsGraphRoughMountain
-                          );
                           return pointService.alphaLevelsPointsGraphRoughMountain;
                         })()}
                         dot
@@ -728,7 +719,7 @@ export const App: React.FC = () => {
                       <></>
                     )}
                   </Grid>
-                  {selectedGraph ? (
+                  {selectedGraph && showTable ? (
                     <Grid item xs={2} minWidth={"30%"}>
                       <Box sx={{ height: "100%", width: "100%" }}>
                         <DataGrid

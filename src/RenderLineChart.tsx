@@ -1,19 +1,7 @@
 import React from "react";
-import {
-  LineChart,
-  Line,
-  CartesianGrid,
-  XAxis,
-  YAxis,
-  Tooltip,
-  Legend,
-  ResponsiveContainer,
-  ReferenceLine,
-  Dot,
-  Scatter
-} from "recharts";
+
 import { FunctionComponent } from "react";
-import { FC, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { IPoint } from "./PointService";
 import {
   VictoryChart,
@@ -137,7 +125,7 @@ const Counter = () => {
 // };
 
 export interface IRenderLineChart {
-  data: Array<IPoint>;
+  data?: Array<IPoint>;
   width: number;
   height: number;
   additionalPoints?: Array<IPoint>;
@@ -219,6 +207,7 @@ export const RenderLineChart: React.FC<IRenderLineChart> = ({
       ...a,
       x: parseFloat(a.x.toFixed(1))
     }));
+  if(data)
   data = data.map((d) => ({
     ...d,
     x: parseFloat(d.x.toFixed(1))
@@ -300,7 +289,8 @@ export const RenderLineChart: React.FC<IRenderLineChart> = ({
             labels={({ datum }) => datum.x}
           />
         ) : null}
-        <VictoryLine data={data} />
+        {data ? (
+          <VictoryLine data={data} />) : null}
         {/* <VictoryLine
           style={{ data: { stroke: "red" } }}
           data={additionalPoints}
@@ -333,16 +323,16 @@ export const RenderLineChart: React.FC<IRenderLineChart> = ({
         />
         {additionalPoints
           ? additionalPoints.map((p, i) => {
-              // const getNumber = (arr: any, number: any) =>
-              //   arr
-              //     .map((it: any) => {
-              //       const ch = (it >= 0 ? it : -it) + number;
-              //       return {
-              //         base: it,
-              //         result: ch >= 0 ? ch : -ch
-              //       };
-              //     })
-              //     .sort((a: any, b: any) => a.result - b.result)[0].base;
+              const getNumber = (arr: any, number: any) =>
+                arr
+                  .map((it: any) => {
+                    const ch = (it >= 0 ? it : -it) + number;
+                    return {
+                      base: it,
+                      result: ch >= 0 ? ch : -ch
+                    };
+                  })
+                  .sort((a: any, b: any) => a.result - b.result)[0].base;
               const getNumber = (arr: any, searchNumer: any) =>
                 arr.find(
                   (it: any) =>

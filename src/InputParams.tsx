@@ -141,7 +141,7 @@ export const InputParams: React.FC<IInputParams> = ({
           id="inputAlpha"
           label="Enter the number of alpha levels "
           variant="standard"
-          style={{ minWidth: "250px" }}
+          style={{ minWidth: "150px" }}
           value={alphaShow}
           onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
             setAlphaShow(event.target.value);

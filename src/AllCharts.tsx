@@ -22,7 +22,7 @@ import { ResponsiveGraph } from "./ResponsiveGraph";
 import { Slider } from "@mui/material";
 
 import { off } from "process";
-import { ColorToggleButton, ToogleView } from "./toggleTabs";
+import { ColorToggleButton, ToogleView } from "./toggleTabsOneOrAll";
 import { IPointService } from "./PointService";
 interface IAllCharts {
   PointStorage: IPointService;

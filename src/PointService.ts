@@ -34,7 +34,7 @@ export interface IPointService {
 
     //
     alphaLevelsStructGraphS: FuzzyStruct[];
-    alphaLevelsStructGraphMountin: FuzzyStruct[];
+    alphaLevelsStructGraphMountain: FuzzyStruct[];
     alphaLevelsStructGraphTriangle: FuzzyStruct[];
     alphaLevelsStructGraphBackS: FuzzyStruct[];
     alphaLevelsStructGraphTrapeze: FuzzyStruct[];
@@ -95,7 +95,7 @@ export class PointService implements IPointService {
     alphaLevelsPointsGraphRoughMountain: IPoint[] = [];
     //
     alphaLevelsStructGraphS: FuzzyStruct[] = [];
-    alphaLevelsStructGraphMountin: FuzzyStruct[] = [];
+    alphaLevelsStructGraphMountain: FuzzyStruct[] = [];
     alphaLevelsStructGraphTriangle: FuzzyStruct[] = [];
     alphaLevelsStructGraphBackS: FuzzyStruct[] = [];
     alphaLevelsStructGraphTrapeze: FuzzyStruct[] = [];
@@ -230,7 +230,7 @@ export class PointService implements IPointService {
         for (let i = 0; i <= 1; i += step) {
             alphaLevelsStructMountin.push(this.fuzzyClass.findXByAlphaLevelGraphMountain(i, A, B, C));
         }
-        this.alphaLevelsStructGraphMountin = alphaLevelsStructMountin;
+        this.alphaLevelsStructGraphMountain = alphaLevelsStructMountin;
 
     };
     calculateAlphaLevelsTriangle(countAlphaLevels: number, A: number, B: number, C: number) {
@@ -318,21 +318,21 @@ export class PointService implements IPointService {
 
 
 
-        for (let i = 0; i < this.alphaLevelsStructGraphMountin.length; i += 1) {
-            const point = this.alphaLevelsStructGraphMountin[i].left;
+        for (let i = 0; i < this.alphaLevelsStructGraphMountain.length; i += 1) {
+            const point = this.alphaLevelsStructGraphMountain[i].left;
             if (point)
                 alphaLevelsPointsGraphMountain.push({
                     x: point,
-                    y: this.alphaLevelsStructGraphMountin[i].alphaLevel,
+                    y: this.alphaLevelsStructGraphMountain[i].alphaLevel,
                 });
         }
 
-        for (let i = 0; i < this.alphaLevelsStructGraphMountin.length; i += 1) {
-            const point = this.alphaLevelsStructGraphMountin[i].right;
+        for (let i = 0; i < this.alphaLevelsStructGraphMountain.length; i += 1) {
+            const point = this.alphaLevelsStructGraphMountain[i].right;
             if (point)
                 alphaLevelsPointsGraphMountain.push({
                     x: point,
-                    y: this.alphaLevelsStructGraphMountin[i].alphaLevel,
+                    y: this.alphaLevelsStructGraphMountain[i].alphaLevel,
                 });
         }
 
