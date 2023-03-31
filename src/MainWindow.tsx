@@ -74,7 +74,6 @@ export const MainWindow: React.FC<any> = () => {
   }, []);
 
   const calculateMatrixc = (str1?: string, str2?: string) => {
-    let text = "";
     if (str1 && str1?.length !== 0 && str2 && str2?.length !== 0) {
       const matrix_from_lines = matrixService._create_matrix_from_lines(
         str1,
@@ -95,13 +94,13 @@ export const MainWindow: React.FC<any> = () => {
           matrix_from_lines,
           max_min_composition
         );
-
+      const newArray = [];
       for (let i = 2; i < n; i++) {
         max_min_composition = matrixService._calculate_max_min_composition(
           max_min_composition,
           matrix_from_lines
         );
-        arrayMax_min_composition.push({
+        newArray.push({
           label: `R^${i + 1}:`,
           max_min_composition: max_min_composition,
         });
@@ -110,6 +109,7 @@ export const MainWindow: React.FC<any> = () => {
           max_min_composition
         );
       }
+      setArrayMax_min_composition(newArray)
       // console.log('Транзитивное замыкание:')
       setTransitive_closure(transitive_closure);
       let percentage_of_similarity = transitive_closure[n - 1][n - 1] * 100;
@@ -133,9 +133,9 @@ export const MainWindow: React.FC<any> = () => {
   const calculate = React.useCallback(
     (operation: string) => {
       let array: Array<IPoint> = [];
-      console.log(
-        `eval(pointService1.alphaLevelsStructGraph${selectedGraph1}.length')`
-      );
+      // console.log(
+      //   `eval(pointService1.alphaLevelsStructGraph${selectedGraph1}.length')`
+      // );
       ///  console.log(eval(`pointService1.alphaLevelsStructGraph${selectedGraph1}.length`))
       if (selectedGraph1 && selectedGraph2) {
         for (
@@ -147,26 +147,34 @@ export const MainWindow: React.FC<any> = () => {
           const a = eval(
             `pointService1.alphaLevelsStructGraph${selectedGraph1}[i]`
           );
+          console.log('selectedGraph2', selectedGraph2)
           const b = eval(
-            `pointService1.alphaLevelsStructGraph${selectedGraph2}[i]`
+            `pointService2.alphaLevelsStructGraph${selectedGraph2}[i]`
           );
+          console.log("a", a);
+          console.log("b", b);
+          console.log(pointService2.alphaLevelsPointsGraphGaussian);
+          console.log(pointService2.alphaLevelsStructGraphGaussian);
+          console.log('operation',operation)
           const result: FuzzyStruct = eval(`fuzzyOperaion.${operation}(a,b)`);
+          console.log(fuzzyOperaion.multiplication(a,b))
+          console.log(result);
           if (result?.left)
             array.push({
               x: result?.left,
-              y: result.alphaLevel,
+              y: result?.alphaLevel,
             });
           if (result?.right)
             array.push({
-              x: result.right,
-              y: result.alphaLevel,
+              x: result?.right,
+              y: result?.alphaLevel,
             });
         }
         setResultFuzzyOperation(array);
         console.log("array", array);
       }
     },
-    [selectedGraph1, selectedGraph2]
+    [pointService2.alphaLevelsPointsGraphGaussian, pointService2.alphaLevelsStructGraphGaussian, selectedGraph1, selectedGraph2]
   );
 
   return (
