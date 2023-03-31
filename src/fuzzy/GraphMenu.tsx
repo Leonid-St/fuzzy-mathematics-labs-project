@@ -27,7 +27,7 @@ export const GraphMenu: React.FC<IGraphMenu> = ({
   fuzzyClass,
   selectedGraph,
   setSelectedGraph,
-  PointStorage
+  PointStorage,
 }) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
@@ -61,7 +61,7 @@ export const GraphMenu: React.FC<IGraphMenu> = ({
       <StyledMenu
         id="demo-customized-menu"
         MenuListProps={{
-          "aria-labelledby": "demo-customized-button"
+          "aria-labelledby": "demo-customized-button",
         }}
         anchorEl={anchorEl}
         open={open}

@@ -9,7 +9,7 @@ import {
   GraphByNumber,
   GraphName,
   GraphsParam,
-  SelectedGrapth
+  SelectedGrapth,
 } from "./fuzzy/ProtocolFuzy";
 import Box from "@mui/material/Box";
 // interface IApp {
@@ -35,27 +35,32 @@ const columns: any = [
     width: 100,
     hideable: true,
     hide: true,
-    editable: true
+    editable: true,
   },
   {
     field: "left",
     headerName: "left-x",
     width: 100,
-    editable: true
+    editable: true,
   },
   {
     field: "right",
     headerName: "right-x",
-    width: 100
-  }
+    width: 100,
+  },
 ];
-interface IApp{
+interface IApp {
   pointService: PointService;
   showTable?: boolean;
   selectedGraph?: SelectedGrapth;
   setSelectedGraph: (selectedGraph: SelectedGrapth) => void;
 }
-export const App: React.FC<IApp> = ({pointService,showTable = false , selectedGraph , setSelectedGraph}) => {
+export const App: React.FC<IApp> = ({
+  pointService,
+  showTable = false,
+  selectedGraph,
+  setSelectedGraph,
+}) => {
   const [alpha, setAlpha] = React.useState<number | undefined>();
   const [A, setA] = React.useState<number | undefined>();
   const [B, setB] = React.useState<number | undefined>();
@@ -66,13 +71,10 @@ export const App: React.FC<IApp> = ({pointService,showTable = false , selectedGr
     ToogleView.OneChart
   );
 
- 
   //const [sliderA, setsliderA] = React.useState<number | undefined>();
   const fuzzyClass = React.useMemo(() => {
     return new Fuzzy();
   }, []);
-
- 
 
   const updatePointsAB = React.useCallback(
     //debounce(
@@ -305,7 +307,7 @@ export const App: React.FC<IApp> = ({pointService,showTable = false , selectedGr
     },
     [
       recalculateAlphaLevelsRoughMountain,
-      recalculatePointsAlphaLevelsRoughMountain
+      recalculatePointsAlphaLevelsRoughMountain,
     ]
   );
   //--/
@@ -355,7 +357,7 @@ export const App: React.FC<IApp> = ({pointService,showTable = false , selectedGr
       updateAlphaLevelsRoughMountain,
       updateAlphaLevelsSigmoid,
       updateAlphaLevelsTrapeze,
-      updateAlphaLevelsTriangle
+      updateAlphaLevelsTriangle,
     ]
   );
 
@@ -464,7 +466,7 @@ export const App: React.FC<IApp> = ({pointService,showTable = false , selectedGr
       updatePointsRoughMountain,
       updatePointsSigmoid,
       updatePointsTrapeze,
-      updatePointsTriangle
+      updatePointsTriangle,
     ]
   );
 
@@ -728,9 +730,9 @@ export const App: React.FC<IApp> = ({pointService,showTable = false , selectedGr
                           initialState={{
                             pagination: {
                               paginationModel: {
-                                pageSize: 10
-                              }
-                            }
+                                pageSize: 10,
+                              },
+                            },
                           }}
                           pageSizeOptions={[10]}
                           //checkboxSelection

@@ -9,12 +9,12 @@ interface IColorToggleButton {
 
 export enum ToogleView {
   OneChart = "One Chart",
-  All = "All"
+  All = "All",
 }
 
 export const ColorToggleButton: React.FC<IColorToggleButton> = ({
   alignment,
-  setAlignment
+  setAlignment,
 }) => {
   const handleChange = (
     event: React.MouseEvent<HTMLElement>,

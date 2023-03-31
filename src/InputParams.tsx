@@ -29,7 +29,7 @@ export const InputParams: React.FC<IInputParams> = ({
   C,
   setC,
   D,
-  setD
+  setD,
 }) => {
   const [alphaShow, setAlphaShow] = React.useState<string>("");
   const [AShow, setAShow] = React.useState<string>("");

@@ -9,7 +9,7 @@ import {
   GraphByNumber,
   GraphName,
   GraphsParam,
-  SelectedGrapth
+  SelectedGrapth,
 } from "./fuzzy/ProtocolFuzy";
 import Box from "@mui/material/Box";
 // interface IApp {

@@ -1,46 +1,49 @@
 export enum GraphByNumber {
-    S = 1,
-    Mountain = 2,
-    Triangle = 3,
-    BackS = 4,
-    Trapeze = 5,
-    Gaussian = 6,
-    Sigmoid = 7,
-    RoughMountain = 8,
+  S = 1,
+  Mountain = 2,
+  Triangle = 3,
+  BackS = 4,
+  Trapeze = 5,
+  Gaussian = 6,
+  Sigmoid = 7,
+  RoughMountain = 8,
 }
 
 export enum GraphName {
-    S = "S",
-    Mountain = "Mountain",
-    Triangle = "Triangle",
-    BackS = "BackS",
-    Trapeze = "Trapeze",
-    Gaussian = "Gaussian",
-    Sigmoid = "Sigmoid",
-    RoughMountain = "RoughMountain"
+  S = "S",
+  Mountain = "Mountain",
+  Triangle = "Triangle",
+  BackS = "BackS",
+  Trapeze = "Trapeze",
+  Gaussian = "Gaussian",
+  Sigmoid = "Sigmoid",
+  RoughMountain = "RoughMountain",
 }
 
 export type SelectedGrapth =
-    | GraphName.S
-    | GraphName.Mountain
-    | GraphName.Triangle
-    | GraphName.BackS
-    | GraphName.Trapeze
-    | GraphName.Gaussian
-    | GraphName.Sigmoid
-    | GraphName.RoughMountain;
+  | GraphName.S
+  | GraphName.Mountain
+  | GraphName.Triangle
+  | GraphName.BackS
+  | GraphName.Trapeze
+  | GraphName.Gaussian
+  | GraphName.Sigmoid
+  | GraphName.RoughMountain;
 
 export enum GraphsParam {
-    A = "A",
-    B = "B",
-    C = "C",
-    D = "D"
+  A = "A",
+  B = "B",
+  C = "C",
+  D = "D",
 }
 export type GraphAB = GraphsParam.A;
 
 export type GraphABC = GraphsParam.A & GraphsParam.B & GraphsParam;
 
-export type GraphABCD = GraphsParam.A & GraphsParam.B & GraphsParam.C & GraphsParam.D;
+export type GraphABCD = GraphsParam.A &
+  GraphsParam.B &
+  GraphsParam.C &
+  GraphsParam.D;
 
 export type GraphS = GraphByNumber.S & GraphAB;
 

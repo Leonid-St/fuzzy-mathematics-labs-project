@@ -7,7 +7,7 @@ import {
   VictoryChart,
   VictoryLine,
   VictoryScatter,
-  VictoryCursorContainer
+  VictoryCursorContainer,
 } from "victory";
 
 type Unsubscribe = () => void;
@@ -37,7 +37,7 @@ const createSubject = function <T>(initialValue: T): Subject<T> {
     subscribe: (f) => {
       subscribers.set(f, f);
       return () => subscribers.delete(f);
-    }
+    },
   };
 };
 
@@ -64,7 +64,7 @@ const RenderSubject = function <T>({ children }: { children: Subject<T> }) {
 const Counter = () => {
   const counterSubject = createSubject<test>({
     list: [<div style={{ color: "black" }}>1</div>],
-    i: 1
+    i: 1,
   });
   return (
     <Wrapper>
@@ -77,9 +77,9 @@ const Counter = () => {
               const newValue = {
                 list: [
                   ...value.list,
-                  <div style={{ color: "black" }}>{value.i + 1}</div>
+                  <div style={{ color: "black" }}>{value.i + 1}</div>,
                 ],
-                i: value.i + 1
+                i: value.i + 1,
               };
               return newValue;
             })()
@@ -100,9 +100,9 @@ const Counter = () => {
               const newValue = {
                 list: [
                   ...value.list,
-                  <div style={{ color: "black" }}>{value.i - 1}</div>
+                  <div style={{ color: "black" }}>{value.i - 1}</div>,
                 ],
-                i: value.i - 1
+                i: value.i - 1,
               };
               return newValue;
             })()
@@ -200,18 +200,18 @@ export const RenderLineChart: React.FC<IRenderLineChart> = ({
   additionalPoints,
   tooltip,
   dot,
-  legend
+  legend,
 }) => {
   if (additionalPoints && additionalPoints.length)
     additionalPoints = additionalPoints.map((a) => ({
       ...a,
-      x: parseFloat(a.x.toFixed(1))
+      x: parseFloat(a.x.toFixed(1)),
     }));
-  if(data)
-  data = data.map((d) => ({
-    ...d,
-    x: parseFloat(d.x.toFixed(1))
-  }));
+  if (data)
+    data = data.map((d) => ({
+      ...d,
+      x: parseFloat(d.x.toFixed(1)),
+    }));
   // console.log(data);
   // console.log(additionalPoints);
 
@@ -270,27 +270,26 @@ export const RenderLineChart: React.FC<IRenderLineChart> = ({
           <VictoryScatter
             style={{
               parent: {
-                border: "1px solid #ccc"
+                border: "1px solid #ccc",
               },
               data: {
                 fill: "#c43a31",
                 fillOpacity: 0.6,
                 stroke: "#c43a31",
-                strokeWidth: 2
+                strokeWidth: 2,
               },
               labels: {
                 fontSize: 10,
                 fill: "#c43a31",
-                padding: 15
-              }
+                padding: 15,
+              },
             }}
             size={9}
             data={additionalPoints}
             labels={({ datum }) => datum.x}
           />
         ) : null}
-        {data ? (
-          <VictoryLine data={data} />) : null}
+        {data ? <VictoryLine data={data} /> : null}
         {/* <VictoryLine
           style={{ data: { stroke: "red" } }}
           data={additionalPoints}

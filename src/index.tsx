@@ -6,13 +6,12 @@ import { MainWindow } from "./MainWindow";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
-);  
+);
 
 root.render(
   <React.StrictMode>
     <StyledEngineProvider injectFirst>
-    
-     <MainWindow/>
+      <MainWindow />
     </StyledEngineProvider>
   </React.StrictMode>
 );

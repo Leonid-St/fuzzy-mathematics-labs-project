@@ -6,7 +6,7 @@ import {
   ReferenceLine,
   ResponsiveContainer,
   XAxis,
-  YAxis
+  YAxis,
 } from "recharts";
 import { IPoint } from "./PointService";
 
@@ -25,7 +25,7 @@ export const ResponsiveGraph: React.FC<IResponsiveGraph> = ({
   height,
   tooltip,
   dot,
-  legend
+  legend,
 }) => {
   const minX = React.useMemo(() => {
     return Math.min(...data.map((d: IPoint) => d.x));
@@ -40,7 +40,7 @@ export const ResponsiveGraph: React.FC<IResponsiveGraph> = ({
           top: 10,
           right: 20,
           left: 20,
-          bottom: 20
+          bottom: 20,
         }}
       >
         <CartesianGrid strokeDasharray="3 3" />
@@ -55,7 +55,7 @@ export const ResponsiveGraph: React.FC<IResponsiveGraph> = ({
             style: { textAnchor: "middle" },
             angle: -90,
             position: "left",
-            offset: 0
+            offset: 0,
           }}
           allowDataOverflow={true}
           strokeWidth={minX < 0 ? 0 : 1}
@@ -69,7 +69,7 @@ export const ResponsiveGraph: React.FC<IResponsiveGraph> = ({
           label={{
             key: "xAxisLabel",
             value: "x",
-            position: "bottom"
+            position: "bottom",
           }}
           allowDataOverflow={true}
           strokeWidth={minY < 0 ? 0 : 1}
