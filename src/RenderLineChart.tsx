@@ -1,14 +1,12 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React from "react";
 
-import { FunctionComponent } from "react";
-import { useEffect, useState } from "react";
-import { IPoint } from "./PointService";
+import { FunctionComponent, useEffect, useState } from "react";
 import {
-  VictoryChart,
-  VictoryLine,
-  VictoryScatter,
-  VictoryCursorContainer,
+  VictoryChart, VictoryCursorContainer, VictoryLine,
+  VictoryScatter
 } from "victory";
+import { IPoint } from "./PointService";
 
 type Unsubscribe = () => void;
 
@@ -83,7 +81,7 @@ const Counter = () => {
               };
               return newValue;
             })()
-            //.add(<div style={{ color: "black" }}></div>)
+            
           );
         }}
       >
@@ -115,14 +113,7 @@ const Counter = () => {
   );
 };
 
-// export const App = () => {
-//   return (
-//     <div>
-//       <Counter />
-//       <Counter />
-//     </div>
-//   );
-// };
+
 
 export interface IRenderLineChart {
   data?: Array<IPoint>;
@@ -143,16 +134,14 @@ const CustomDot: FunctionComponent<any> = (props: any) => {
     if (point) {
       return (
         <svg
-          // x={cx - 10}
-          // y={cy - 10}
+        
           width={20}
           height={20}
           fill="red"
           viewBox="0 0 1024 1024"
         >
           <circle
-            // cx="50"
-            // cy="50"
+          
             r="40"
             stroke="black"
             stroke-width="3"
@@ -166,32 +155,7 @@ const CustomDot: FunctionComponent<any> = (props: any) => {
   return <></>;
 };
 
-// class Bar extends React.Component {
-//   render() {
-//     const data = {
-//       labels: ["W1", "W2", "W3", "W4", "W5", "W6", "W7", "W8", "W9", "W10"],
-//       series: [[1, 2, 4, 8, 6, -2, -1, -4, -6, -2]]
-//     };
 
-//     const options = {
-//       high: 10,
-//       low: -10,
-//       axisX: {
-//         labelInterpolationFnc: function (value: any, index: any) {
-//           return index % 2 === 0 ? value : null;
-//         }
-//       }
-//     };
-
-//     const type = "Bar";
-
-//     return (
-//       <div>
-//         <ChartistGraph data={data} options={options} type={type} />
-//       </div>
-//     );
-//   }
-// }
 
 export const RenderLineChart: React.FC<IRenderLineChart> = ({
   data,
@@ -212,46 +176,7 @@ export const RenderLineChart: React.FC<IRenderLineChart> = ({
       ...d,
       x: parseFloat(d.x.toFixed(1)),
     }));
-  // console.log(data);
-  // console.log(additionalPoints);
-
-  //data = data.map((d)=>({...d,xA additionalPoints,yA}))
-  // const d = (() => {
-  //   const newData: Array<any> = [];
-  //   let indexNewArray = 0;
-  //   let indexAdditional = 0;
-  //   if (additionalPoints && additionalPoints.length !== 0)
-  //     for (let i = 0; i < data.length - 2; i++) {
-  //       //const curX = data[i].x;
-  //       if (!additionalPoints[indexAdditional]) {
-  //         newData.push(data[i]);
-  //         continue;
-  //       }
-  //       if (
-  //         data[i].x <= additionalPoints[indexAdditional].x &&
-  //         data[i + 1].x >= additionalPoints[indexAdditional].x
-  //       ) {
-  //         newData.push(data[i]);
-  //         indexNewArray++;
-  //         newData.push({
-  //           ...additionalPoints[indexAdditional],
-  //           yA: additionalPoints[indexAdditional].y
-  //         });
-  //         indexNewArray++;
-  //         indexAdditional++;
-  //         console.log("indexAdditional:  " + indexAdditional);
-  //         console.log(
-  //           "additionalPoints[indexAdditional]:  ",
-  //           additionalPoints[indexAdditional]
-  //         );
-  //       } else {
-  //         newData.push(data[i]);
-  //         indexNewArray++;
-  //       }
-  //     }
-  //   return newData;
-  // })();
-  //console.log({ d });
+  
   return (
     <>
       {/* <Counter /> */}
@@ -290,102 +215,9 @@ export const RenderLineChart: React.FC<IRenderLineChart> = ({
           />
         ) : null}
         {data ? <VictoryLine data={data} /> : null}
-        {/* <VictoryLine
-          style={{ data: { stroke: "red" } }}
-          data={additionalPoints}
-        /> */}
+       
       </VictoryChart>
-      {/* <LineChart
-        width={width}
-        height={height}
-        // data= {additionalPoints && additionalPoints.length !== 0 ? d : data}
-        // data={d}
-        margin={{ top: 5, right: 20, bottom: 5, left: 0 }}
-      >
-        <XAxis xAxisId={1} dataKey={"x"} id="1" interval={5} />
-        <YAxis dataKey="y" />
-        <XAxis xAxisId={2} id="1" dataKey="xa" interval={5} /> 
-        <Line
-          // type="monotone"
-          dataKey="y"
-          data={data}
-          stroke="#8884d8"
-          xAxisId={1}
-          //data={data}
-          dot={
-            dot
-              ? additionalPoints
-                ? ((<CustomDot additionalPoint={additionalPoints} />) as any)
-                : true
-              : false
-          }
-        />
-        {additionalPoints
-          ? additionalPoints.map((p, i) => {
-              const getNumber = (arr: any, number: any) =>
-                arr
-                  .map((it: any) => {
-                    const ch = (it >= 0 ? it : -it) + number;
-                    return {
-                      base: it,
-                      result: ch >= 0 ? ch : -ch
-                    };
-                  })
-                  .sort((a: any, b: any) => a.result - b.result)[0].base;
-              const getNumber = (arr: any, searchNumer: any) =>
-                arr.find(
-                  (it: any) =>
-                    Math.abs(it - searchNumer) ===
-                    Math.min(
-                      ...arr.map((it: any) => Math.abs(it - searchNumer))
-                    )
-                );
-              const near = getNumber(
-                (() => {
-                  const a = [];
-                  for (let i = 0; i < 50; i++) a.push(i);
-                  return a;
-                })(),
-                p.x
-              ); // <= тот элемент, который нам нужен
-              return (
-                <>
-                  <ReferenceLine key={`x-${i}`} x={near} stroke="red" />{" "}
-                  <ReferenceLine key={`y-${i}`} y={p.y} stroke="red" />
-                  <Line
-                    type="basisOpen"
-                    dataKey="y"
-                    stroke="red"
-                    //style={{ opacity: 0 }}
-                    dot={{ radius: 5 }}
-                  />
-                </>
-              );
-            })
-          : null}
-        {additionalPoints
-          ? additionalPoints.map((p, i) => (
-              <ReferenceLine key={`y-${i}`} y={p.y} stroke="red" />
-            ))
-          : null}
-        <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
-
-        {additionalPoints ? (
-          <Line
-            type="monotone"
-            dataKey="yA"
-            stroke="red"
-            xAxisId={1}
-            data={additionalPoints}
-            // data={additionalPoints}
-            //style={{ opacity: 0 }}
-            dot={{ radius: 5 }}
-          />
-        ) : null}
-
-        {tooltip ? <Tooltip /> : null}
-        {legend ? <Legend /> : null}
-      </LineChart> */}
+     
     </>
   );
 };

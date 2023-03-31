@@ -1,29 +1,9 @@
+import Grid from "@mui/material/Grid";
+import Stack from "@mui/material/Stack";
 import React from "react";
 import "./App.css";
-import { GraphMenu, SelectGraph } from "./fuzzy/GraphMenu";
-///import { CustomizedMenus, RenderLineChart } from "./SelectGrapth";
-import Grid from "@mui/material/Grid";
-import { InputParams } from "./InputParams";
-import { Fuzzy, FuzzyClass } from "./fuzzy/FuzzuClass";
-import {
-  GraphByNumber,
-  GraphName,
-  GraphsParam,
-  SelectedGrapth,
-} from "./fuzzy/ProtocolFuzy";
-import Box from "@mui/material/Box";
-// interface IApp {
-//   fuzzyClass: FuzzyClass;
-// }
-import Stack from "@mui/material/Stack";
-import { RenderLineChart } from "./RenderLineChart";
-import { ResponsiveGraph } from "./ResponsiveGraph";
-
-import { Slider } from "@mui/material";
-
-import { off } from "process";
-import { ColorToggleButton, ToogleView } from "./toggleTabsOneOrAll";
 import { IPointService } from "./PointService";
+import { RenderLineChart } from "./RenderLineChart";
 interface IAllCharts {
   PointStorage: IPointService;
 }

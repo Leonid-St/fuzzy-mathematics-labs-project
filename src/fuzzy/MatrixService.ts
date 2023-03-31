@@ -9,9 +9,9 @@ export class MatrixService {
       for (let second_size = 0; second_size < n; second_size++) {
         let matches = 0;
         for (let i = 0; i < n - first_size; i++) {
-          let substring1 = line1.slice(i, i + first_size + 1); //  [i: i + first_size + 1];
+          let substring1 = line1.slice(i, i + first_size + 1);
           for (let j = 0; j < n - second_size; j++) {
-            let substring2 = line2.slice(j, j + second_size + 1); //[j: j + second_size + 1];
+            let substring2 = line2.slice(j, j + second_size + 1);
             try {
               if (first_size >= second_size) {
                 const a = substring1.indexOf(substring2);

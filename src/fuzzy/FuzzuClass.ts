@@ -1,18 +1,5 @@
-import { alpha } from "@mui/material/styles";
-import { NumberLiteralType } from "typescript";
+
 export interface FuzzyClass {
-  // F: (
-  //   x: number,
-  //   n: number,
-  //   a: number,
-  //   b: number,
-  //   c?: number,
-  //   d?: number
-  // ) => number;
-  /**
-   * x = alpha level , n - тип графика , коэффициенты . Return X .
-   * @return {[number]} y
-   */
 
   findYGraphS: (x: number, a: number, b: number) => number;
   findYGraphMountain: (x: number, a: number, b: number, c: number) => number;
@@ -74,14 +61,7 @@ export interface FuzzyClass {
     a: number,
     b: number
   ) => FuzzyStruct;
-  // _F: (
-  //   x: number,
-  //   n: number,
-  //   a: number,
-  //   b: number,
-  //   c?: number,
-  //   d?: number
-  // ) => number;
+
 }
 
 export interface FuzzyStruct {
@@ -91,18 +71,7 @@ export interface FuzzyStruct {
 }
 
 export class Fuzzy implements FuzzyClass {
-  //  internal class Mu1GraphCalculator : IGraphCalculator
-  // {
-  //         public double Calculate(double x, double a, double b, double c, double d)
-  //   {
-  //     if (x < a)
-  //       return 0;
-  //     if (x >= a && x < (a + b) / 2)
-  //       return 2 * Math.Pow(x - a, 2) / Math.Pow(b - a, 2);
-  //     if (x >= (a + b) / 2 && x < b)
-  //       return 1 - 2 * Math.Pow(x - b, 2) / Math.Pow(b - a, 2);
-  //     return 1;
-  //   }
+
 
   private findYGraphSCashe: any = {};
   findYGraphS(x: number, a: number, b: number) {
@@ -112,12 +81,7 @@ export class Fuzzy implements FuzzyClass {
       return this.findYGraphSCashe[key];
     }
     let F = 0;
-    // if (x < a) F = 0;
-    // if (a  x && x < (a + b) / 2)
-    //   F = (2 * Math.pow(x - a, 2)) / Math.pow(b - a, 2);
-    // if ((a + b) / 2 <= x && x <= b)
-    //   F = 1 - (2 * Math.pow(x - b, 2)) / Math.pow(b - a, 2);
-    // if (x >= b) F = 1;
+
 
     if (x < a) F = 0;
     if (x >= a && x < (a + b) / 2)
@@ -226,10 +190,6 @@ export class Fuzzy implements FuzzyClass {
       return this.findYGraphRoughMountainCashe[key];
     }
     let F = 0;
-    // if (x <= a - 3 * b) F = 0;
-    // if (a - 3 * b <= x && x <= a + 3 * b)
-    //   F = Math.exp((-(x - a) * (x - a)) / (2 * b * b));
-    // if (a + 3 * b <= x) F = 0;
 
     // Делаем график на 35 процентов сначала МЕНЬШЕ, потом БОЛЬШЕ
     b = x < a ? b - (b / 100) * 35 : b + (b / 100) * 35;
@@ -237,88 +197,9 @@ export class Fuzzy implements FuzzyClass {
     this.findYGraphRoughMountainCashe[key] = F;
     return F;
   }
-  // F: (
-  //   x: number,
-  //   n: number,
-  //   a: number,
-  //   b: number,
-  //   c: number = 0,
-  //   d: number = 0
-  // ) => {
-  //   let F: number = 0;
-  //   switch (n) {
-  //     case 1:
-  //       // if (x <= a) F = 0
-  //       // if (a <= x && x <= (a + b) / 2)
-  //       //   F = (2 * Math.pow(x - a, 2)) / Math.pow(b - a, 2);
-  //       // if ((a + b) / 2 <= x && x <= b)
-  //       //   F = 1 - (2 * Math.pow(x - b, 2)) / Math.pow(b - a, 2);
-  //       // if (x >= b) F = 1;
-  //       break;
-  //     case 2:
-  //       // if (x <= a) F = 0;
-  //       // if (a <= x && x <= (a + b) / 2)
-  //       //   F = (2 * Math.pow(x - a, 2)) / Math.pow(b - a, 2);
-  //       // if ((a + b) / 2 <= x && x <= b)
-  //       //   F = 1 - (2 * Math.pow(x - b, 2)) / Math.pow(b - a, 2);
-  //       // if (b <= x && x <= c) F = 1;
-  //       // if (c <= x && x <= c + (b - a) / 2)
-  //       //   F = 1 - (2 * Math.pow(x - c, 2)) / Math.pow(b - a, 2);
-  //       // if (c + (b - a) / 2 <= x && x <= c + (b - a))
-  //       //   F = (2 * Math.pow(x - c + a - b, 2)) / Math.pow(b - a, 2);
-  //       // if (x >= c + b - a) F = 0;
-  //       break;
-  //     case 3:
-  // if (x <= a) F = 0;
-  // if (a <= x && x <= c) F = (x - a) / (c - a);
-  // if (c <= x && x <= b) F = (b - x) / (b - c);
-  // if (x >= b) F = 0;
-  //       break;
-  //     case 4:
-  //       // if (x <= c) F = 1;
-  //       // if (x > c) F = 1 / (1 + a * Math.pow(x - c, b));
-  //       break;
-  //     case 5:
-  // if (x <= a) F = 0;
-  // if (a <= x && x <= c) F = (x - a) / (c - a);
-  // if (c <= x && x <= d) F = 1;
-  // if (d <= x && x <= b) F = (b - x) / (b - d);
-  // if (b <= x) F = 0;
-  //       break;
-  //     case 6:
-  // if (x <= a - 3 * b) F = 0;
-  // if (a - 3 * b <= x && x <= a + 3 * b)
-  //   F = Math.exp((-(x - a) * (x - a)) / (2 * b * b));
-  // if (a + 3 * b <= x) F = 0;
-  //       break;
-  //     case 7:
-  //       // F = 1 / (1 + Math.exp(-a * (x - b)));
-  //       break;
-  //     case 8:
-  // if (x <= a - 3 * b) F = 0;
-  // if (a - 3 * b <= x && x <= a + 3 * b)
-  //   F = Math.exp((-(x - a) * (x - a)) / (2 * b * b));
-  // if (a + 3 * b <= x) F = 0;
-  //       break;
-  //   }
-  //   return F;
-  // },
 
-  // public FuzzyStruct CalculateFuzzyStruct(double alphaLevel, double a, double b, double c, double d) {
-  //   if (alphaLevel <= 0.5)
-  //     return new FuzzyStruct(
-  //       alphaLevel,
-  //       a + Math.Sqrt(alphaLevel * (b - a) * (b - a) / 2),
-  //       null
-  //     );
-  //   return new FuzzyStruct(
-  //     alphaLevel,
-  //     null,
-  //     b + -1 * Math.Sqrt((1 - alphaLevel) * (b - a) * (b - a) / 2)
-  //   );
-  // }
   findXByAlphaLevelGraphS(alphaLevel: number, a: number, b: number) {
-    //let _F = {};
+
     if (alphaLevel <= 0.5)
       return {
         alphaLevel,
@@ -458,65 +339,5 @@ export class Fuzzy implements FuzzyClass {
     };
   }
 
-  // _F: (alphaLevel: number, n: number, a: number, b: number, c: number = 0, d: number = 0) => {
-  //   let _F: number = 0;
-  //   switch (n) {
-  //     case 1:
-  //       // if ((0 <= alphaLevel) && (alphaLevel <= 0.5))
-  //       //   _F = a + Math.sqrt(alphaLevel * (b - a) * (b - a) / 2);
-  //       // if ((0.5 < x) && (alphaLevel <= 1))
-  //       //   _F = b + -1 * Math.sqrt((1 - x) * (b - a) * (b - a) / 2);
-  //       break;
-  //     case 2:
 
-  //       // if ((0 <= x) && (alphaLevel <= 0.5))
-  //       //   _F = a + Math.sqrt(alphaLevel * (b - a) * (b - a) / 2);
-  //       // if ((0.5 < x) && (alphaLevel <= 1))
-  //       //   _F = b + -1 * Math.sqrt((1 - x) * (b - a) * (b - a) / 2);
-  //       // if (alphaLevel > 1)
-  //       //   _F = 1;
-  //       break;
-  //     case 3:
-
-  //       // if ((0 <= x) && (alphaLevel <= 1))
-  //       //   _F = a + x * (c - a);
-  //       // if (alphaLevel > 1)
-  //       //   _F = 1;
-  //       break;
-  //     case 4:
-
-  //       // if ((0 <= x) && (alphaLevel <= 1))
-  //       //   _F = c + Math.pow((1 / x - 1) / a, 1 / b);
-  //       // if (alphaLevel > 1)
-  //       //   _F = 1;
-
-  //       break;
-  //     case 5:
-
-  //       // if ((0 <= x) && (alphaLevel <= 1))
-  //       //   _F = a + x * (c - a);
-  //       // if (alphaLevel > 1)
-  //       //   _F = 1;
-  //       break;
-  //     case 6:
-  //       // if ((0 <= x) && (alphaLevel <= 1))
-  //       //   _F = a + Math.sqrt(-2 * b * b * Math.log(alphaLevel));
-  //       // if (alphaLevel > 1)
-  //       //   _F = 1;
-  //       break;
-  //     case 7:
-  //       // if ((0 <= x) && (alphaLevel <= 1))
-  //       //   _F = -a * Math.log(1 / x - 1) + b;
-  //       // if (alphaLevel > 1)
-  //       //   _F = 1;
-  //       break;
-  //     case 8:
-  //       if ((0 <= x) && (alphaLevel <= 1))
-  //         _F = a + Math.sqrt(-2 * b * b * Math.log(alphaLevel));
-  //       if (alphaLevel > 1)
-  //         _F = 1;
-  //       break;
-  //   }
-  //   return _F;
-  // }
 }

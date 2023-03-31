@@ -1,17 +1,16 @@
-import Button from "@mui/material/Button";
-import MenuItem from "@mui/material/MenuItem";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import Grid from "@mui/material/Grid";
-import Stack from "@mui/material/Stack";
-import { FuzzyClass } from "./FuzzuClass";
-import { StyledMenu } from "../StyledMenu";
-import { GraphByNumber, GraphName, SelectedGrapth } from "./ProtocolFuzy";
-import Box from "@mui/material/Box";
-import { RenderLineChart } from "../RenderLineChart";
-import React from "react";
-import { Checkbox, ListItemIcon } from "@mui/material";
 import Check from "@mui/icons-material/Check";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import { ListItemIcon } from "@mui/material";
+import Button from "@mui/material/Button";
+import Grid from "@mui/material/Grid";
+import MenuItem from "@mui/material/MenuItem";
+import Stack from "@mui/material/Stack";
+import React from "react";
 import { IPointService } from "../PointService";
+import { RenderLineChart } from "../RenderLineChart";
+import { StyledMenu } from "../StyledMenu";
+import { FuzzyClass } from "./FuzzuClass";
+import { GraphName, SelectedGrapth } from "./ProtocolFuzy";
 
 export const SelectGraph: React.FC = () => {
   return <></>;
@@ -31,9 +30,7 @@ export const GraphMenu: React.FC<IGraphMenu> = ({
 }) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
-  // const [selectedGraph, setSelectedGraph] = React.useState<
-  //   SelectedGrapth | undefined
-  // >(undefined);
+
 
   const open = Boolean(anchorEl);
 

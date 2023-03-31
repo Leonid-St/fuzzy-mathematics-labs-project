@@ -27,16 +27,3 @@
   },
   "include": ["src"]
 }
-// {
-//     "compilerOptions": {
-//         "strict": true,
-//         "target": "ES2015",
-//         "module": "ESNext"
-//     },
-//     "ts-node": {
-//         "transpileOnly": true, // you can specify ts-node options here
-//         "compilerOptions": {
-//             "module": "ESNext" // you can also override compilerOptions.  Only ts-node will use these overrides
-//         }
-//     }
-// }

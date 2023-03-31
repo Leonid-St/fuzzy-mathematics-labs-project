@@ -1,32 +1,21 @@
 import React from "react";
 import "./App.css";
-import { GraphMenu, SelectGraph } from "./fuzzy/GraphMenu";
+import { GraphMenu } from "./fuzzy/GraphMenu";
 ///import { CustomizedMenus, RenderLineChart } from "./SelectGrapth";
-import Grid from "@mui/material/Grid";
-import { InputParams } from "./InputParams";
-import { Fuzzy, FuzzyClass } from "./fuzzy/FuzzuClass";
-import {
-  GraphByNumber,
-  GraphName,
-  GraphsParam,
-  SelectedGrapth,
-} from "./fuzzy/ProtocolFuzy";
 import Box from "@mui/material/Box";
-// interface IApp {
-//   fuzzyClass: FuzzyClass;
-// }
+import Grid from "@mui/material/Grid";
 import Stack from "@mui/material/Stack";
-import { RenderLineChart } from "./RenderLineChart";
-import { ResponsiveGraph } from "./ResponsiveGraph";
-import { Slider } from "@mui/material";
-
-import { off } from "process";
-import { ColorToggleButton, ToogleView } from "./toggleTabsOneOrAll";
+import { DataGrid } from "@mui/x-data-grid";
 import { AllCharts } from "./AllCharts";
+import { Fuzzy } from "./fuzzy/FuzzuClass";
+import {
+  GraphName,
+  SelectedGrapth
+} from "./fuzzy/ProtocolFuzy";
+import { InputParams } from "./InputParams";
 import { PointService } from "./PointService";
-import { throttle, debounce } from "lodash";
-
-import { DataGrid, GridColDef, GridValueGetterParams } from "@mui/x-data-grid";
+import { RenderLineChart } from "./RenderLineChart";
+import { ColorToggleButton, ToogleView } from "./toggleTabsOneOrAll";
 
 const columns: any = [
   {
@@ -101,35 +90,10 @@ export const App: React.FC<IApp> = ({
       if (A && B && C && D) {
         pointService.calculatePointsTrapeze(A, B, C, D);
       }
-      // }, 1500),
     },
     [A, B, C, D, pointService]
   );
-  // const updatePointsABC = React.useCallback(
-  //   //debounce(
-  //   () => {
-  //     if (A && B && C) {
-  //       pointService.calculatePointsMountain(A, B, C);
-  //       pointService.calculatePointsTriangle(A, B, C);
-  //       pointService.calculatePointsBackS(A, B, C);
-  //       if (A && B && C && D) {
-  //         pointService.calculatePointsTrapeze(A, B, C, D);
-  //       }
-  //     }
-  //   },
-  //   [A, B, C, D, pointService]
-  // );
-
-  // const updatePointsABCD = React.useCallback(
-  //   //debounce(
-  //   () => {
-  //     if (A && B && C && D) {
-  //       pointService.calculatePointsTrapeze(A, B, C, D);
-  //     }
-  //   },
-  //   [A, B, C, D, pointService]
-  // );
-
+ 
   const recalculateAlphaLevelsGraphS = React.useCallback(
     (alphaLevel: number, a: number, b: number) => {
       pointService.calculateAlphaLevelsGraphS(alphaLevel, a, b);
@@ -470,23 +434,7 @@ export const App: React.FC<IApp> = ({
     ]
   );
 
-  // const updateRowGraphS = React.useCallback(() => {
-  //   pointService.alphaLevelsStructGraphS.map((s) => {})[
-  //     { alphaLevel: 1, left: 1, right: 1 }
-  //   ];
-  // }, []);
-
-  // React.useEffect(() => {
-  //   updatePointsAB();
-  // }, [A, B, C, D]);
-  // const stor: IPointStorage | undefined = createPointStorage();
-  // let PointStorage: IPointStorage | any = {};
-
-  //if (stor) PointStorage = stor;
-
-  //React.useEffect(() => {}, [A, B, C, D, alpha, PointStorage, stor]);
-
-  // console.log({ pointService });
+ 
 
   const prepareDataForDataGrid = (arr: Array<any>) => {
     return arr.map((s: any, i: number) => ({ id: s.alphaLevel, ...s }));

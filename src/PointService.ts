@@ -1,5 +1,4 @@
-import { throws } from "assert";
-import { Fuzzy, FuzzyClass, FuzzyStruct } from "./fuzzy/FuzzuClass";
+import { Fuzzy, FuzzyStruct } from "./fuzzy/FuzzuClass";
 
 export interface IPoint {
   x: number;
@@ -25,7 +24,7 @@ export interface IPointService {
   calculatePointsSigmoid: (A: number, B: number) => void;
   calculatePointsRoughMountain: (A: number, B: number) => void;
 
-  //
+
   alphaLevelsStructGraphS: FuzzyStruct[];
   alphaLevelsStructGraphMountain: FuzzyStruct[];
   alphaLevelsStructGraphTriangle: FuzzyStruct[];
@@ -135,26 +134,9 @@ export class PointService implements IPointService {
   alphaLevelsStructGraphGaussian: FuzzyStruct[] = [];
   alphaLevelsStructGraphSigmoid: FuzzyStruct[] = [];
   alphaLevelsStructGraphRoughMountain: FuzzyStruct[] = [];
-  // private calc(
-  //     arrayTo: Array<IPoint>,
-  //     callHowCalculate: (X: number, A: number, B: number, C?: number, D?: number) => number,
-  //     A: number,
-  //     B: number,
-  //     C?: number,
-  //     D?: number
-  // ) {
-  //     const array: Array<IPoint> = [];
-  //     for (let i = 0; i < this.countPoints; i++) {
-  //         array.push({
-  //             x: i,
-  //             y: callHowCalculate(i, A, B, C, D)
-  //         });
-  //     }
-  //     arrayTo = array;
-  // }
+
 
   calculatePointsGraphS(A: number, B: number) {
-    //this.calc(this.pointsGraphS, this.fuzzyClass.findYGraphS, A, B)
     const pointsGraphS: Array<IPoint> = [];
     for (let i = 0; i < this.countPoints; i++) {
       pointsGraphS.push({
@@ -165,7 +147,6 @@ export class PointService implements IPointService {
     this.pointsGraphS = pointsGraphS;
   }
   calculatePointsMountain(A: number, B: number, C: number) {
-    //this.calc(this.pointsGraphMountain, this.fuzzyClass.findYGraphMountain, A, B, C)
     const pointsGraphMountain: Array<IPoint> = [];
     for (let i = 0; i < this.countPoints; i++) {
       pointsGraphMountain.push({
@@ -176,7 +157,6 @@ export class PointService implements IPointService {
     this.pointsGraphMountain = pointsGraphMountain;
   }
   calculatePointsTriangle(A: number, B: number, C: number) {
-    //  this.calc(this.pointsGraphTriangle, this.fuzzyClass.findYGraphS, A, B, C)
     const pointsGraphTriangle: Array<IPoint> = [];
     for (let i = 0; i < this.countPoints; i++) {
       pointsGraphTriangle.push({
@@ -237,19 +217,11 @@ export class PointService implements IPointService {
     this.pointsGraphRoughMountain = pointsGraphRoughMountain;
   }
 
-  //alphalevels
   calculateAlphaLevelsGraphS(countAlphaLevels: number, A: number, B: number) {
     const step = 1 / countAlphaLevels;
     const alphaLevelsStructGraphS: FuzzyStruct[] = [];
     for (let i = 0; i <= 1; i += step) {
-      // console.log("findXByAlphaLevelGraphS(i, A, B)");
-      // console.log("A");
-      // console.log(A);
-      // console.log("B");
-      // console.log(B);
-      // console.log("i");
-      // console.log(i);
-      // console.log(this.fuzzyClass.findXByAlphaLevelGraphS(i, A, B));
+
       alphaLevelsStructGraphS.push(
         this.fuzzyClass.findXByAlphaLevelGraphS(i, A, B)
       );
@@ -353,7 +325,6 @@ export class PointService implements IPointService {
       alphaLevelsStructGraphRoughMountain;
   }
 
-  //AlphaLevelsPoints
   calculateAlphaLevelsPointsGraphS(A: number, B: number) {
     const alphaLevelsPointsGraphS: Array<IPoint> = [];
 

@@ -6,7 +6,7 @@ import {
   ReferenceLine,
   ResponsiveContainer,
   XAxis,
-  YAxis,
+  YAxis
 } from "recharts";
 import { IPoint } from "./PointService";
 

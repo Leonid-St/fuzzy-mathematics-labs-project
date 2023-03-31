@@ -3,9 +3,8 @@ import { Slider } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
-import React, { useEffect } from "react";
 import { throttle } from "lodash";
-import { setCommentRange } from "typescript";
+import React from "react";
 interface IInputParams {
   alpha?: number;
   setAlpha: (alpha: number | undefined) => void;
@@ -37,17 +36,6 @@ export const InputParams: React.FC<IInputParams> = ({
   const [CShow, setCShow] = React.useState<string>("");
   const [DShow, setDShow] = React.useState<string>("");
 
-  // useEffect(() => {
-  //   if (A) {
-  //     if (`${A}` !== AShow) setAShow(`${A ?? ""}`);
-  //   }
-  // }, [A]);
-
-  // const trottleAlpha = throttle(() => {
-  //   const parseAlpha = validParse(alphaShow);
-  //   if (parseAlpha) setAlpha(parseAlpha);
-  //   // send the server request here
-  // }, 100);
 
   const trottleA = throttle(() => {
     const parseA = validParse(AShow);
@@ -69,63 +57,14 @@ export const InputParams: React.FC<IInputParams> = ({
     if (parseD) setD(parseD);
   }, 16);
 
-  // useEffect(() => {
-  //   if (alphaShow) {
-  //     const parseAlpha = parseInt(alphaShow);
-  //     if (typeof parseAlpha === "number" && Number.isNaN(parseAlpha) === false)
-  //       debounceSetAlphaShow();
-  //       //debounce(setAlpha, 500)(parseAlpha);
-  //   }
-  // }, [alphaShow, setAlpha]);
-  // useEffect(() => {
-  //   if (AShow) {
-  //     const parseA = parseInt(AShow);
-  //     if (
-  //       typeof parseA === "number" &&
-  //       Number.isNaN(parseA) === false &&
-  //       parseA !== A
-  //     )
-  //       setA(parseA);
-  //   }
-  // }, [AShow, setA]);
-  // useEffect(() => {
-  //   if (BShow) {
-  //     const parseB = parseInt(BShow);
-  //     if (typeof parseB === "number" && Number.isNaN(parseB) === false)
-  //       setB(parseB);
-  //   }
-  // }, [BShow, setB]);
-  // useEffect(() => {
-  //   if (CShow) {
-  //     const parseC = parseInt(CShow);
-  //     if (typeof parseC === "number" && Number.isNaN(parseC) === false)
-  //       setC(parseC);
-  //   }
-  // }, [CShow, setC]);
-
-  // useEffect(() => {
-  //   if (DShow) {
-  //     const parseD = parseInt(DShow);
-  //     if (typeof parseD === "number" && Number.isNaN(parseD) === false)
-  //       setD(parseD);
-  //   }
-  // }, [DShow, setD]);
+  
 
   const inputRefAlpha = React.useRef<any>();
   const inputRefA = React.useRef<any>();
   const inputRefB = React.useRef<any>();
   const inputRefC = React.useRef<any>();
   const inputRefD = React.useRef<any>();
-  // React.useEffect(() => {
-  //   const eventListener = document.addEventListener("keypress", (e) => {
-  //     if (e.key === "Enter") {
-  //     }
-  //   });
-
-  //   // return () => {
-  //   //   document.removeEventListener(eventListener);
-  //   // };
-  // }, []);
+ 
   const validParse = (value: any): number | undefined => {
     const parseValue = parseFloat(value);
     if (typeof parseValue === "number" && Number.isNaN(parseValue) === false)

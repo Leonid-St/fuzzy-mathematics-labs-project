@@ -1,28 +1,28 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable no-eval */
-import React from "react";
+import { Grid } from "@mui/material";
 import { Stack } from "@mui/system";
-import { RenderLineChart } from "./RenderLineChart";
+import React from "react";
 import { App } from "./App";
-import { Grid, TextField } from "@mui/material";
-import { PointService, IPoint } from "./PointService";
 import {
   FuzzyOperaion,
   FuzzyOperationList,
-  FuzzyOperationState,
+  FuzzyOperationState
 } from "./fuzzy/FuzzyOperaion";
 import { SelectedGrapth } from "./fuzzy/ProtocolFuzy";
+import { IPoint, PointService } from "./PointService";
+import { RenderLineChart } from "./RenderLineChart";
 
+import { TextareaAutosize } from "@mui/base";
 import { FuzzyStruct } from "./fuzzy/FuzzuClass";
+import { MatrixService } from "./fuzzy/MatrixService";
+import { RenderMatrix } from "./renderMatrix";
 import { ToggleTabsFuzzyOperation } from "./toggleTabsFuzzyOperation";
 import {
   ApplicationModeList,
   ApplicationModeState,
-  ToggleTabsGrapthMatrix,
+  ToggleTabsGrapthMatrix
 } from "./toggleTabsGrapthMatrix";
-import { TextareaAutosize } from "@mui/base";
-import { MatrixService } from "./fuzzy/MarixService";
-import { RenderMatrix } from "./renderMatrix";
 
 export const MainWindow: React.FC<any> = () => {
   const pointService1 = React.useMemo(() => new PointService(), []);
